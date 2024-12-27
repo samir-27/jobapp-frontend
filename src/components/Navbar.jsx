@@ -3,21 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // State to track if the user is signed in
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
 
-  // Check if the user is authenticated when the component mounts
   useEffect(() => {
-    // Check for JWT token in cookies or localStorage
-    const token = document.cookie.replace(
-      /(?:(?:^|.*;\s*)token\s*\=\s*([^;]*).*$)|^.*$/,
-      "$1"
-    );
-
+    const token = localStorage.getItem("authToken");
     if (token) {
-      setIsAuthenticated(true); // User is signed in
-    } else {
-      setIsAuthenticated(false); // User is not signed in
+      setIsAuthenticated(true);
     }
   }, []);
 
@@ -26,10 +18,9 @@ const Navbar = () => {
   };
 
   const handleLogout = () => {
-    // Remove the token from cookies
-    document.cookie = "token=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; 
-    setIsAuthenticated(false); // Set authentication state to false
-    navigate("/"); // Redirect to home after logout
+    localStorage.removeItem("authToken");
+    setIsAuthenticated(false);
+    navigate("/");
   };
 
   return (
@@ -39,7 +30,6 @@ const Navbar = () => {
           <Link to="/">Brand</Link>
         </div>
 
-        {/* Desktop Menu */}
         <div className="hidden md:flex space-x-8 items-center">
           <Link
             to="/"
@@ -48,10 +38,10 @@ const Navbar = () => {
             Home
           </Link>
           <Link
-            to="/blog"
+            to="/jobs"
             className="text-gray-700 hover:text-indigo-500 font-medium"
           >
-            Blog
+            Jobs
           </Link>
           <Link
             to="/about"
@@ -66,7 +56,7 @@ const Navbar = () => {
             Contact
           </Link>
 
-          {/* Conditionally Render Sign In / Log Out Button */}
+          {/* Login/Logout button logic */}
           {isAuthenticated ? (
             <button
               onClick={handleLogout}
@@ -116,10 +106,10 @@ const Navbar = () => {
             Home
           </Link>
           <Link
-            to="/blog"
+            to="/jobs"
             className="block py-2 px-4 text-gray-700 hover:text-indigo-500"
           >
-            Blog
+            Jobs
           </Link>
           <Link
             to="/about"
@@ -134,7 +124,6 @@ const Navbar = () => {
             Contact
           </Link>
 
-          {/* Mobile button (conditional rendering) */}
           {isAuthenticated ? (
             <button
               onClick={handleLogout}

@@ -31,12 +31,16 @@ const Signin = () => {
   
       if (response.ok) {
         const token = data.token; 
-        console.log("Token:", token);
+        // console.log("Token:", token);
+     
+        localStorage.setItem("authToken", token);
+      
         toast.success("Login successful!");
         navigate("/home");
       } else {
         toast.error(data.message || "Login failed. Please try again.");
       }
+      
     } catch (error) {
       console.error("Error during login:", error);
       toast.error(`Something went wrong: ${error.message || "Please try again later."}`);

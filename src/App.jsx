@@ -6,6 +6,8 @@ import Contact from "./pages/Contact";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
 import { ToastContainer } from "react-toastify";
+import Jobs from "./pages/Jobs";
+import JobDetail from "./pages/JobDetail";
 
 
 const App = () => {
@@ -15,6 +17,8 @@ const App = () => {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/jobs" element={<Jobs />} />
+        <Route path="/job-detail/:id" element={<JobDetail />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/signin" element={<Signin />} />
