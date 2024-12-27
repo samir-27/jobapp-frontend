@@ -24,10 +24,10 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white shadow-lg z-50">
-      <div className="container mx-auto px-6 py-4 flex justify-between items-center h-8vh">
+    <nav className="bg-white border-b-2 z-50">
+      <div className="py-4 flex justify-between items-center h-8vh">
         <div className="text-2xl font-bold text-indigo-500">
-          <Link to="/">Brand</Link>
+          <Link to="/">Get Placed</Link>
         </div>
 
         <div className="hidden md:flex space-x-8 items-center">

@@ -21,7 +21,7 @@ const Jobs = () => {
   }, [filters]);
 
   return (
-    <div className="container mx-auto px-6 mt-10">
+    <div className="mt-10">
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <div className="md:col-span-1">
           <FilterSection setFilters={setFilters} />

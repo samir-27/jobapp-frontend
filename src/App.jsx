@@ -14,6 +14,7 @@ const App = () => {
   return (
     <>
       <ToastContainer position="top-center" />
+      <div className="2xl:mx-96 xl:mx-72 lg:mx-52 md:mx-36 mx-10 ">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -24,6 +25,7 @@ const App = () => {
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
+      </div>
     </>
   );
 };
