@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import JobCard from "../components/JobCard";
 import FilterSection from "../components/FilterSection";
+import { useSearchParams } from "react-router-dom";
 
 const Jobs = () => {
   const [jobs, setJobs] = useState([]);
-  const [filters, setFilters] = useState({});
+  const [searchParams] = useSearchParams();
   useEffect(() => {
   
     const fetchJobs = async () => {
       try {
-        const response = await fetch("http://localhost:3000/jobs");
+        let queryString = searchParams.toString();
+        const response = await fetch(`http://localhost:3000/jobs?${queryString}`);
         const data = await response.json();
         setJobs(data);
       } catch (error) {
@@ -18,16 +20,16 @@ const Jobs = () => {
     };
 
     fetchJobs();
-  }, [filters]);
+  }, [searchParams]);
 
   return (
     <div className="mt-10">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-        <div className="md:col-span-1">
-          <FilterSection setFilters={setFilters} />
+      <div className="flex sm:flex-row gap-10 flex-col">
+        <div className="sm:w-1/3 w-full">
+          <FilterSection/>
         </div>
-        <div className="md:col-span-3">
-          <div className="grid grid-cols-1 gap-6">
+        <div className="sm:w-2/3 w-full">
+          <div className="">
             {jobs.map((job) => (
               <JobCard key={job.id} job={job} />
             ))}

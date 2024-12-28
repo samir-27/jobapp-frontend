@@ -14,7 +14,7 @@ const App = () => {
   return (
     <>
       <ToastContainer position="top-center" />
-      <div className="2xl:mx-96 xl:mx-72 lg:mx-52 md:mx-36 mx-10 ">
+      <div className="2xl:mx-96 xl:mx-72 lg:mx-52 md:mx-20  mx-10 ">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />

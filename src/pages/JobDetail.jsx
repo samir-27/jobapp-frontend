@@ -100,7 +100,7 @@ const JobDetailPage = () => {
       <div>
         <h1 className="text-xl font-semibold my-4 text-indigo-500 uppercase">Nice to Have:</h1>
         <ul className="list-disc pl-5">
-          {job.nicetohave.map((point, index) => (
+          {job.niceToHave.map((point, index) => (
             <li key={index}>{point}</li>
           ))}
         </ul>

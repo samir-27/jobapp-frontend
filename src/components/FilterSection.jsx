@@ -1,99 +1,191 @@
-import { useState } from "react";
+import { useState, useEffect } from 'react';
+import { Accordion, AccordionItem as Item } from "@szhsin/react-accordion";
+import { useSearchParams } from 'react-router-dom';
 
-const FilterSection = ({ setFilters }) => {
-  const [title, setTitle] = useState("");
-  const [location, setLocation] = useState("");
-  const [salary, setSalary] = useState([0, 100000]);
-  const [experience, setExperience] = useState("");
+const AccordionComponent = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [selectedFilters, setSelectedFilters] = useState({});
+  const [skillInput, setSkillInput] = useState('');
+  const [skillsArray, setSkillsArray] = useState([]);
+  
+  const filters = [
+    {
+      id: 'location',
+      name: 'Location',
+      options: [
+        { value: 'remote', label: 'Remote' },
+        { value: 'hybrid', label: 'Hybrid' },
+        { value: 'location', label: 'Location' },
+      ],
+    },
+    {
+      id: 'jobType',
+      name: 'Job Type',
+      options: [
+        { value: 'Part-Time', label: 'Part Time' },
+        { value: 'Full-Time', label: 'Full Time' },
+        { value: 'Contract', label: 'Contract' }
+      ],
+    },
+    {
+      id: 'experience',
+      name: 'Experience',
+      options: [
+        { value: 'fresher', label: 'Fresher' },
+        { value: '1-3years', label: '1 to 3 years' },
+        { value: '3-5years', label: '3 to 5 years' },
+        { value: '5-10years', label: '5 to 10 years' },
+        { value: '10-20years', label: '10 to 20 years' },
+      ],
+    },
+  ];
 
-  const handleFilterChange = () => {
-    setFilters({
-      title,
-      location,
-      salary,
-      experience,
+  const handleFilterChange = (filterId, optionValue) => {
+    setSelectedFilters((prevFilters) => ({
+      ...prevFilters,
+      [filterId]: optionValue,
+    }));
+  };
+
+  const handleSkillInputChange = (e) => {
+    setSkillInput(e.target.value);
+  };
+
+  const handleSkillAdd = () => {
+    if (skillInput.trim() !== '') {
+      setSkillsArray((prevSkills) => [...prevSkills, skillInput.trim()]);
+      setSkillInput('');
+    }
+  };
+
+  const handleSkillRemove = (skill) => {
+    setSkillsArray((prevSkills) => prevSkills.filter((s) => s !== skill));
+  };
+
+  const handleClearFilters = () => {
+    setSelectedFilters({});
+    setSkillsArray([]);
+    
+    // Remove all search params
+    const keysToRemove = Array.from(searchParams.keys());
+    keysToRemove.forEach((key) => searchParams.delete(key));
+  
+    setSearchParams(searchParams); // Update the search params state
+  };
+
+  useEffect(() => {
+    if (skillsArray.length > 0) {
+      searchParams.set('skills', skillsArray.join(','));
+    } else {
+      searchParams.delete('skills');
+    }
+
+    Object.keys(selectedFilters).forEach((key) => {
+      if (selectedFilters[key]) {
+        searchParams.set(key, selectedFilters[key]);
+      } else {
+        searchParams.delete(key);
+      }
     });
-  };
 
-  const handleSalaryChange = (index, value) => {
-    const updatedSalary = [...salary];
-    updatedSalary[index] = value;
-    setSalary(updatedSalary);
-  };
+    setSearchParams(searchParams);
+  }, [skillsArray, selectedFilters, searchParams, setSearchParams]);
+
+  const AccordionItem = ({ header, children }) => (
+    <Item
+      header={() => <>{header}</>}
+      className="mb-2"
+      buttonProps={{
+        className: () =>
+          `flex w-full p-4 text-left bg-slate-100 hover:bg-slate-200 text-xl font-bold rounded-md`,
+      }}
+      contentProps={{
+        className: "transition-height duration-200 ease-out",
+      }}
+      panelProps={{ className: "p-4" }}
+    >
+      {children}
+    </Item>
+  );
 
   return (
-    <div className="border border-gray-200 p-6 rounded-lg">
-      <h3 className="text-lg font-semibold mb-4">Filters</h3>
-      <div className="mb-4">
-        <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-          Job Title
-        </label>
+    <div className="space-y-4">
+      <div>
+        <label className="font-medium text-gray-700">Job Title</label>
         <input
           type="text"
-          id="title"
-          className="mt-1 p-2 w-full border border-gray-300 rounded"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="Search job title"
+          name="title"
+          value={selectedFilters.title || ''}
+          onChange={(e) => handleFilterChange('title', e.target.value)}
+          placeholder="Search by job title"
+          className="w-full p-2 border border-gray-300 rounded-md"
         />
       </div>
-      <div className="mb-4">
-        <label htmlFor="location" className="block text-sm font-medium text-gray-700">
-          Location
-        </label>
-        <input
-          type="text"
-          id="location"
-          className="mt-1 p-2 w-full border border-gray-300 rounded"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-          placeholder="Search location"
-        />
-      </div>
-      <div className="mb-4">
-        <label htmlFor="salary" className="block text-sm font-medium text-gray-700">
-          Salary Range
-        </label>
-        <div className="flex items-center gap-2">
+
+      <div>
+        <label className="font-medium text-gray-700">Skills</label>
+        <div className="flex space-x-2">
           <input
-            type="range"
-            id="salary-min"
-            className="w-full"
-            min="0"
-            max="100000"
-            step="1000"
-            value={salary[0]}
-            onChange={(e) => handleSalaryChange(0, +e.target.value)}
+            type="text"
+            value={skillInput}
+            onChange={handleSkillInputChange}
+            placeholder="Search by skills"
+            className="w-full p-2 border border-gray-300 rounded-md"
           />
+          <button
+            className="bg-indigo-500 text-white px-4 rounded-md"
+            onClick={handleSkillAdd}
+          >
+            Add
+          </button>
         </div>
         <div className="mt-2">
-          ${salary[0]} - ${salary[1]}
+          {skillsArray.map((skill) => (
+            <span
+              key={skill}
+              className="bg-indigo-200  border-2 px-2 py-1 rounded-full text-sm mr-2"
+            >
+              {skill}
+              <button
+                className="ml-1 "
+                onClick={() => handleSkillRemove(skill)}
+              >
+                &times;
+              </button>
+            </span>
+          ))}
         </div>
       </div>
-      <div className="mb-4">
-        <label htmlFor="experience" className="block text-sm font-medium text-gray-700">
-          Experience
-        </label>
-        <select
-          id="experience"
-          className="mt-1 p-2 w-full border border-gray-300 rounded"
-          value={experience}
-          onChange={(e) => setExperience(e.target.value)}
-        >
-          <option value="">Select experience level</option>
-          <option value="entry">Entry Level</option>
-          <option value="mid">Mid Level</option>
-          <option value="senior">Senior Level</option>
-        </select>
-      </div>
+
+      <Accordion>
+        {filters.map((filter) => (
+          <AccordionItem key={filter.id} header={filter.name} >
+            <div className="flex flex-col space-y-2">
+              {filter.options.map((option) => (
+                <label key={option.value} className="flex items-center space-x-2">
+                  <input
+                    type="radio"
+                    name={filter.id}
+                    value={option.value}
+                    checked={selectedFilters[filter.id] === option.value}
+                    onChange={() => handleFilterChange(filter.id, option.value)}
+                    className="form-radio"
+                  />
+                  <span>{option.label}</span>
+                </label>
+              ))}
+            </div>
+          </AccordionItem>
+        ))}
+      </Accordion>
       <button
-        onClick={handleFilterChange}
-        className="w-full px-4 py-2 bg-indigo-500 text-white rounded hover:bg-indigo-600"
+        className="bg-indigo-500 p-2 rounded-md text-white font-semibold w-full"
+        onClick={handleClearFilters}
       >
-        Apply Filters
+        Clear Filters
       </button>
     </div>
   );
 };
 
-export default FilterSection;
+export default AccordionComponent;
