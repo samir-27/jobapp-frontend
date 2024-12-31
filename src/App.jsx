@@ -11,21 +11,17 @@ import JobDetail from "./pages/JobDetail";
 import CompanyDashBoard from "./pages/CompanyDashBoard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AddJob from "./components/AddJob";
-
+import PostedJobs from "./components/PostedJobs";
+import CompanyNav from "./components/CompanyNav";
 
 const App = () => {
   const location = useLocation();
+
   return (
     <>
-
-
       <ToastContainer position="top-center" />
-      <div className="2xl:mx-96 xl:mx-72 lg:mx-52 md:mx-20  mx-10 ">
-        {
-          location.pathname !== "/signin" &&
-          location.pathname !== "/signup" &&
-          location.pathname !== "/company" &&
-          <Navbar />}
+      <div className="2xl:mx-96 xl:mx-72 lg:mx-52 md:mx-20 mx-10">
+        {!(location.pathname === "/signin" || location.pathname === "/signup" || location.pathname.startsWith("/company")) ? <Navbar /> : <CompanyNav />}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/jobs" element={<Jobs />} />
@@ -35,19 +31,19 @@ const App = () => {
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
 
+          {/* Protected Route for company dashboard */}
           <Route
-            path="/company/*"
+            path="/company"
             element={
               <ProtectedRoute requiredRole="company">
+               
                 <CompanyDashBoard />
               </ProtectedRoute>
             }
           >
-            <Route index element={<AddJob />} />
-            {/* <Route path="allproducts" element={<AllProducts />} />
-            <Route path="allusers" element={<AllUsers />} /> */}
+            <Route index element={<AddJob />} /> {/* Default for /company */}
+            <Route path="postedjobs" element={<PostedJobs />} />
           </Route>
-
         </Routes>
       </div>
     </>

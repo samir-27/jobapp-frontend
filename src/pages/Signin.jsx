@@ -34,6 +34,8 @@ const Signin = () => {
       if (response.ok) {
         const token = data.token;
         const decodedToken = jwtDecode(token);
+        const companyId = decodedToken.id;
+        console.log(`Company ID: ${companyId}`);
         const role = decodedToken.type;
         console.log(`Token: ${token}, Role: ${role}`);
       

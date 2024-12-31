@@ -17,19 +17,11 @@ const CompanyDashBoard = () => {
                 </Link>
               </li>
               <li>
-              <Link
-                  to="."
+                <Link
+                  to="postedjobs"
                   className="block text-center py-4 px-6 bg-indigo-100 hover:bg-indigo-500 hover:text-white rounded-lg font-medium"
                 >
-                  Add Job
-                </Link>
-              </li>
-              <li>
-              <Link
-                  to="."
-                  className="block text-center py-4 px-6 bg-indigo-100 hover:bg-indigo-500 hover:text-white rounded-lg font-medium"
-                >
-                  Add Job
+                  Posted Jobs
                 </Link>
               </li>
             </ul>
@@ -37,7 +29,7 @@ const CompanyDashBoard = () => {
         </div>
 
         {/* Main Content Area */}
-        <div className="w-full border border-gray-300 rounded-lg  p-6">
+        <div className="w-full border border-gray-300 rounded-lg overflow-hidden">
           <Outlet />
         </div>
       </div>
