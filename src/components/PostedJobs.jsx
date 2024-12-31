@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import JobCard from "../components/JobCard";
 import { jwtDecode } from "jwt-decode";
+import CompanyJobCard from "./CompanyJobCard";
 
 const Jobs = () => {
   const [jobs, setJobs] = useState([]);
@@ -31,7 +31,7 @@ const Jobs = () => {
         <div className="w-full">
           <div className="">
             {jobs.map((job) => (
-              <JobCard key={job.id} job={job} />
+              <CompanyJobCard key={job.id} job={job} />
             ))}
           </div>
         </div>
