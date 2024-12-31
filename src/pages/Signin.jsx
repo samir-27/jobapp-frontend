@@ -2,7 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Bgimg from "../assets/loginpng.png";
-import { Login, Placeholder} from "../utils/common"
+import { Login, Placeholder } from "../utils/common"
+import { jwtDecode } from "jwt-decode";
 
 const Signin = () => {
   const navigate = useNavigate();
@@ -19,43 +20,52 @@ const Signin = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, type) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:3000/users/signin", {
+      const url = type === "company" ? "http://localhost:3000/companies/signin" : "http://localhost:3000/users/signin";
+      const response = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
       const data = await response.json();
-  
+
       if (response.ok) {
-        const token = data.token; 
-        // console.log("Token:", token);
-     
+        const token = data.token;
+        const decodedToken = jwtDecode(token);
+        const role = decodedToken.type;
+        console.log(`Token: ${token}, Role: ${role}`);
+      
         localStorage.setItem("authToken", token);
+        localStorage.setItem("role", role);
       
         toast.success("Login successful!");
-        navigate("/home");
+        if(role=="user"){
+          navigate("/home");
+        }else{
+          navigate("/company")
+        }
+
       } else {
         toast.error(data.message || "Login failed. Please try again.");
       }
-      
+
     } catch (error) {
       console.error("Error during login:", error);
       toast.error(`Something went wrong: ${error.message || "Please try again later."}`);
     }
   };
-  
+
 
   const handleSignupRedirect = () => {
     navigate("/signup");
   };
 
   return (
-    <div className="bg-indigo-50 flex justify-center items-center shadow-lg">
+    <div className="bg-indigo-50 flex justify-center items-center">
       {/* Image Section */}
-      <div className="w-1/2 h-92vh hidden lg:block bg-white border">
+      <div className="w-1/2 h-screen hidden lg:block bg-indigo-100">
         <img
           src={Bgimg}
           alt="Illustration"
@@ -67,7 +77,7 @@ const Signin = () => {
       <div className="p-8 w-full flex justify-center lg:w-1/2">
         <div className="bg-white p-8 rounded-lg shadow-xl border max-w-sm w-full">
           <h2 className="text-2xl font-bold text-black text-center mb-6">Login</h2>
-          <form onSubmit={handleSubmit}>
+          <form>
             {/* Email Input */}
             <div className="mb-4">
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
@@ -111,12 +121,29 @@ const Signin = () => {
             </p>
 
             {/* Submit Button */}
+            <div className="flex gap-5">
+
             <button
-              type="submit"
-              className="w-full bg-indigo-700 text-white py-2 rounded-md hover:bg-indigo-800 shadow-md transition"
-            >
-              Login
+              type="button"
+              onClick={(e) => {
+                
+                handleSubmit(e, "user");
+              }}
+              className="w-1/2 bg-indigo-700   text-white py-2 rounded-md hover:bg-indigo-800 shadow-md transition"
+              >
+              User Sign In
             </button>
+            <button
+              type="button"
+              onClick={(e) => {
+                handleSubmit(e, "company");
+              
+              }}
+              className="w-1/2 bg-green-700 text-white py-2 rounded-md hover:bg-green-800 shadow-md transition"
+              >
+              Company Sign In
+            </button>
+              </div>
           </form>
         </div>
       </div>
