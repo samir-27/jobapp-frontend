@@ -5,21 +5,20 @@ import { useSearchParams } from "react-router-dom";
 
 const Jobs = () => {
   const [jobs, setJobs] = useState([]);
-  const [searchParams] = useSearchParams();
+  let [searchParams] = useSearchParams();
+  const fetchJobs = async () => {
+    try {
+      let queryString = searchParams.toString();
+      const response = await fetch(`http://localhost:3000/jobs?${queryString}`);
+      const data = await response.json();
+      setJobs(data);
+    } catch (error) {
+      console.error("Error fetching jobs:", error);
+    }
+  };
   useEffect(() => {
-  
-    const fetchJobs = async () => {
-      try {
-        let queryString = searchParams.toString();
-        const response = await fetch(`http://localhost:3000/jobs?${queryString}`);
-        const data = await response.json();
-        setJobs(data);
-      } catch (error) {
-        console.error("Error fetching jobs:", error);
-      }
-    };
-
     fetchJobs();
+    searchParams =""
   }, [searchParams]);
 
   return (
