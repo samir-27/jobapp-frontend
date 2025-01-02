@@ -28,7 +28,7 @@ const JobDetailPage = () => {
   };
 
   return (
-    <div className="py-8">
+    <div className="p-8 border-t-0 border-2">
       <div className="flex pb-4">
         <div>
           <img className="rounded-full w-14 h-14 object-cover" src="https://bookface-images.s3.amazonaws.com/small_logos/5a28987b3e1b3effc2a33ce770fc25f4424fc775.png" alt="" />

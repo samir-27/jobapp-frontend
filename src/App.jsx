@@ -13,6 +13,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import AddJob from "./components/AddJob";
 import PostedJobs from "./components/PostedJobs";
 import CompanyNav from "./components/CompanyNav";
+import Profile from "./pages/Profile";
+import MyProfile from "./components/MyProfile";
 
 const App = () => {
   const location = useLocation();
@@ -30,13 +32,15 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
-
+          <Route path="/profile" element={<Profile />} >
+            <Route index element={<MyProfile />} />
+          </Route>
           {/* Protected Route for company dashboard */}
           <Route
             path="/company"
             element={
               <ProtectedRoute requiredRole="company">
-               
+
                 <CompanyDashBoard />
               </ProtectedRoute>
             }

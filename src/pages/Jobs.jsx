@@ -22,13 +22,13 @@ const Jobs = () => {
   }, [searchParams]);
 
   return (
-    <div className="mt-10">
+    <div className="mt-5">
       <div className="flex sm:flex-row gap-10 flex-col">
         <div className="sm:w-1/3 w-full">
           <FilterSection/>
         </div>
         <div className="sm:w-2/3 w-full">
-          <div className="">
+          <div className="flex flex-col gap-5">
             {jobs.map((job) => (
               <JobCard key={job.id} job={job} />
             ))}
