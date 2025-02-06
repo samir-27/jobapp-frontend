@@ -16,7 +16,7 @@ const MyProfile = () => {
   useEffect(() => {
     const fetchUserData = async () => {
       const token = localStorage.getItem('authToken');
-       const decodedToken = jwtDecode(token);
+      const decodedToken = jwtDecode(token);
       const userId = decodedToken.id;
 
       try {
@@ -46,136 +46,182 @@ const MyProfile = () => {
   }, []);
 
 
-const handleChange = (e) => {
-  const { name, value } = e.target;
-  setFormData({ ...formData, [name]: value });
-};
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const token = localStorage.getItem("authToken");
+    const token = localStorage.getItem("authToken");
 
-  const decodedToken = jwtDecode(token);
-  const userId = decodedToken.id;
+    const decodedToken = jwtDecode(token);
+    const userId = decodedToken.id;
 
-  try {
-    const response = await fetch(`http://localhost:3000/users/${userId}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    });
-    console.log("fetch user",response)
+    try {
+      const response = await fetch(`http://localhost:3000/users/${userId}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      console.log("fetch user", response)
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || 'Network response was not ok');
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Network response was not ok');
+      }
+
+      toast.success("Profile updated successfully");
+    } catch (error) {
+      console.error('Error:', error);
+      toast.error("Something went wrong");
     }
+  };
 
-    toast.success("Profile updated successfully");
-  } catch (error) {
-    console.error('Error:', error);
-    toast.error("Something went wrong");
-  }
-};
+  return (
+    <div className="mx-auto mt-5">
+      <div className="bg-white shadow-md rounded-lg p-6">
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* User Name & Email - Readonly */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-600">User Name</label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                readOnly
+                className="w-full px-3 py-2 border bg-gray-100 rounded-lg focus:outline-none"
+                placeholder="User name"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-600">Email</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                readOnly
+                className="w-full px-3 py-2 border bg-gray-100 rounded-lg focus:outline-none"
+                placeholder="Email address"
+              />
+            </div>
+          </div>
 
-return (
-  <div className="">
-    <div className="bg-white shadow-md rounded-lg p-6 w-full">
-      <form onSubmit={handleSubmit} className="space-y-4">
-      <div>
-  <label className="block text-sm font-medium text-gray-600">User Name</label>
-  <input
-    type="text"
-    name="name"
-    value={formData.name}
-    readOnly
-    className="w-full px-3 py-2 border bg-gray-100 rounded-lg focus:outline-none"
-    placeholder="User name"
-  />
-</div>
-<div>
-  <label className="block text-sm font-medium text-gray-600">Email</label>
-  <input
-    type="email"
-    name="email"
-    value={formData.email}
-    readOnly
-    className="w-full px-3 py-2 border bg-gray-100 rounded-lg focus:outline-none"
-    placeholder="Email address"
-  />
-</div>
+          {/* Full Name & Phone */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-600">Full Name</label>
+              <input
+                type="text"
+                name="fullname"
+                value={formData.fullname}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-300"
+                placeholder="Enter your full name"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-600">Phone</label>
+              <input
+                type="text"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-300"
+                placeholder="Enter your phone number"
+              />
+            </div>
+          </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-600">Full Name</label>
-          <input
-            type="text"
-            name="fullname"
-            value={formData.fullname}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-300"
-            placeholder="Enter your full name"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-600">Phone</label>
-          <input
-            type="text"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-300"
-            placeholder="Enter your phone number"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-600">Address</label>
-          <input
-            type="text"
-            name="address"
-            value={formData.address}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-300"
-            placeholder="Enter your address"
-          />
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-600">Education</label>
-          <select
-            name="education"
-            value={formData.education}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-300"
+          {/* Address */}
+          <div>
+            <label className="block text-sm font-medium text-gray-600">Address</label>
+            <textarea
+              type="textarea"
+              name="address"
+              value={formData.address}
+              onChange={handleChange}
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-300"
+              placeholder="Enter your address"
+            />
+          </div>
+          <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+
+            <div className=''>
+              <label className="block text-sm font-medium text-gray-600">Pin Code</label>
+              <input
+                type="text"
+                name="pincode"
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-300"
+                placeholder="Enter your pin code"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-600">City</label>
+              <input
+                type="text"
+                name="city"
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-300"
+                placeholder="Enter your City"
+              />
+            </div>
+            <div>
+            <label className="block text-sm font-medium text-gray-600">State</label>
+            <input
+              type="text"
+              name="state"
+             
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-300"
+              placeholder="Enter your State"
+            />
+          </div>
+          </div>
+
+          {/* Education & Course */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-600">Education</label>
+              <select
+                name="education"
+                value={formData.education}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-300"
+              >
+                <option value="">Select Education</option>
+                <option value="diploma">Diploma</option>
+                <option value="graduation">Graduation</option>
+                <option value="post-graduation">Post-Graduation</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-gray-600">Course</label>
+              <input
+                type="text"
+                name="course"
+                value={formData.course}
+                onChange={handleChange}
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-300"
+                placeholder="Enter your course"
+              />
+            </div>
+          </div>
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="w-full bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 transition"
           >
-            <option value="">Select Education</option>
-            <option value="diploma">Diploma</option>
-            <option value="graduation">Graduation</option>
-            <option value="post-graduation">Post-Graduation</option>
-          </select>
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-600">Course</label>
-          <input
-            type="text"
-            name="course"
-            value={formData.course}
-            onChange={handleChange}
-            className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-300"
-            placeholder="Enter your course"
-          />
-        </div>
-        <button
-          type="submit"
-          className="w-full bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 transition"
-        >
-          Update Profile
-        </button>
-      </form>
+            Update Profile
+          </button>
+        </form>
+      </div>
     </div>
-  </div>
-);
+
+  );
 };
 
 export default MyProfile;

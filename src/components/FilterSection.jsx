@@ -97,7 +97,7 @@ const AccordionComponent = () => {
       className="mb-2"
       buttonProps={{
         className: () =>
-          `flex w-full p-4 text-left bg-slate-100 hover:bg-slate-200 text-xl font-bold rounded-md`,
+          `flex w-full p-4 text-left bg-slate-100 hover:bg-slate-200 text-lg font-bold rounded-md`,
       }}
       contentProps={{
         className: "transition-height duration-200 ease-out",
@@ -111,7 +111,7 @@ const AccordionComponent = () => {
   return (
     <div className="space-y-4">
       <div>
-        <label className="font-medium text-gray-700">Job Title</label>
+        <label className="text-lg font-bold">Job Title</label>
         <input
           type="text"
           name="title"
@@ -123,7 +123,7 @@ const AccordionComponent = () => {
       </div>
 
       <div>
-        <label className="font-medium text-gray-700">Skills</label>
+        <label className="text-lg font-bold">Skills</label>
         <div className="flex space-x-2">
           <input
             type="text"

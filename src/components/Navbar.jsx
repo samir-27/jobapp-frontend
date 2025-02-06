@@ -25,64 +25,41 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white border-b-2 z-50 top-0 sticky">
-      <div className="py-4 flex justify-between items-center">
-        <div className="text-2xl font-bold text-indigo-500">
+    <nav className="bg-indigo-500 text-white z-50 top-0 sticky ">
+      <div className="py-4 flex justify-between items-center container mx-auto">
+        <div className="text-2xl font-bold">
           <Link to="/">Get Placed</Link>
         </div>
 
         <div className="hidden md:flex space-x-8 items-center">
-          <Link
-            to="/"
-            className="text-gray-700 hover:text-indigo-500 font-medium"
-          >
-            Home
-          </Link>
-          <Link
-            to="/jobs"
-            className="text-gray-700 hover:text-indigo-500 font-medium"
-          >
-            Jobs
-          </Link>
-          <Link
-            to="/about"
-            className="text-gray-700 hover:text-indigo-500 font-medium"
-          >
-            About
-          </Link>
-          <Link
-            to="/contact"
-            className="text-gray-700 hover:text-indigo-500 font-medium"
-          >
-            Contact
-          </Link>
+          <Link to="/" className="hover:text-gray-300 font-medium">Home</Link>
+          <Link to="/jobs" className="hover:text-gray-300 font-medium">Jobs</Link>
+          <Link to="/about" className="hover:text-gray-300 font-medium">About</Link>
+          <Link to="/contact" className="hover:text-gray-300 font-medium">Contact</Link>
 
           {isAuthenticated ? (
             <button
               onClick={handleLogout}
-              className="px-4 py-2 text-white bg-indigo-500 rounded-md shadow hover:bg-indigo-600"
+              className="px-4 py-2 bg-white text-indigo-500 rounded-md shadow hover:bg-gray-200"
             >
               Log Out
             </button>
           ) : (
             <button
               onClick={handleSignin}
-              className="px-4 py-2 text-white bg-indigo-500 rounded-md shadow hover:bg-indigo-600"
+              className="px-4 py-2 bg-white text-indigo-500 rounded-md shadow hover:bg-gray-200"
             >
               Sign In
             </button>
           )}
-                  <Link
-            to="/profile"
-            className="text-gray-700 hover:text-indigo-500 font-medium"
-          >
+          <Link to="/profile" className="hover:text-gray-300">
             <FaCircleUser size={30} />
           </Link>
         </div>
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-gray-700 focus:outline-none"
+          className="md:hidden focus:outline-none"
           onClick={() => setIsOpen(!isOpen)}
         >
           <svg
@@ -104,43 +81,23 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-white shadow-lg">
-          <Link
-            to="/"
-            className="block py-2 px-4 text-gray-700 hover:text-indigo-500"
-          >
-            Home
-          </Link>
-          <Link
-            to="/jobs"
-            className="block py-2 px-4 text-gray-700 hover:text-indigo-500"
-          >
-            Jobs
-          </Link>
-          <Link
-            to="/about"
-            className="block py-2 px-4 text-gray-700 hover:text-indigo-500"
-          >
-            About
-          </Link>
-          <Link
-            to="/contact"
-            className="block py-2 px-4 text-gray-700 hover:text-indigo-500"
-          >
-            Contact
-          </Link>
+        <div className="md:hidden bg-indigo-500 shadow-lg">
+          <Link to="/" className="block py-2 px-4 hover:text-gray-300">Home</Link>
+          <Link to="/jobs" className="block py-2 px-4 hover:text-gray-300">Jobs</Link>
+          <Link to="/about" className="block py-2 px-4 hover:text-gray-300">About</Link>
+          <Link to="/contact" className="block py-2 px-4 hover:text-gray-300">Contact</Link>
 
           {isAuthenticated ? (
             <button
               onClick={handleLogout}
-              className="w-full py-2 mt-2 text-white bg-indigo-500 rounded-md shadow hover:bg-indigo-600"
+              className="w-full py-2 mt-2 bg-white text-indigo-500 rounded-md shadow hover:bg-gray-200"
             >
               Log Out
             </button>
           ) : (
             <button
               onClick={handleSignin}
-              className="w-full py-2 mt-2 text-white bg-indigo-500 rounded-md shadow hover:bg-indigo-600"
+              className="w-full py-2 mt-2 bg-white text-indigo-500 rounded-md shadow hover:bg-gray-200"
             >
               Sign In
             </button>

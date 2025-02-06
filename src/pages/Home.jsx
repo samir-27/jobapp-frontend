@@ -2,13 +2,13 @@ import React from "react";
 
 const Home = () => {
   return (
-    <div className="bg-gray-100">
+    <div className="">
       {/* Hero Section */}
       <header className="relative">
         <img
-          src="https://www.simplilearn.com/ice9/free_resources_article_thumb/Top_11_Highest_Salary_Jobs_in_India_to_Watch_Out_For_in_2022.jpg"
+          src="https://img.freepik.com/free-photo/handshake-close-up-executives_1098-1384.jpg?t=st=1738859206~exp=1738862806~hmac=2e425b19d33bf709e359b5c94284a94605d7813e693de142d7eb0e5c5478b87a&w=1380"
           alt="Job search"
-          className="w-full h-112 object-cover"
+          className="w-full h-92vh object-cover"
         />
         <div className="absolute inset-0 bg-black bg-opacity-65 flex flex-col justify-center items-center text-center text-white px-4">
           <h1 className="text-4xl sm:text-6xl font-bold mb-4">
@@ -30,8 +30,7 @@ const Home = () => {
         </div>
       </header>
 
-      {/* Benefits Section */}
-      <section className="py-16 bg-white">
+      <section className="py-16">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl sm:text-4xl font-bold text-center mb-12">
             Why Choose Get Placed?

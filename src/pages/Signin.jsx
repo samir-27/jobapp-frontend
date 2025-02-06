@@ -44,7 +44,7 @@ const Signin = () => {
       
         toast.success("Login successful!");
         if(role=="user"){
-          navigate("/home");
+          navigate("/");
         }else{
           navigate("/company")
         }
@@ -67,7 +67,7 @@ const Signin = () => {
   return (
     <div className="bg-indigo-50 flex justify-center items-center">
       {/* Image Section */}
-      <div className="w-1/2 h-screen hidden lg:block bg-indigo-100">
+      <div className="w-1/2 h-92vh hidden lg:block bg-indigo-100">
         <img
           src={Bgimg}
           alt="Illustration"

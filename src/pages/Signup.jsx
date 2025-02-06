@@ -56,7 +56,7 @@ const Signup = () => {
         <div>
             <div className="bg-indigo-50 flex justify-center items-center border">
                 {/* Image Section */}
-                <div className="w-1/2 h-screen hidden lg:block bg-white">
+                <div className="w-1/2 h-92vh hidden lg:block bg-indigo-100">
                     <img
                         src={Bgimg}
                         className="object-contain w-full h-full"

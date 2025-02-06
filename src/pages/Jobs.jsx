@@ -18,17 +18,19 @@ const Jobs = () => {
   };
   useEffect(() => {
     fetchJobs();
-    searchParams =""
+    searchParams = ""
   }, [searchParams]);
 
   return (
-    <div className="mt-5">
+    <div className="mt-5 container mx-auto">
       <div className="flex sm:flex-row gap-10 flex-col">
-        <div className="sm:w-1/3 w-full">
-          <FilterSection/>
+        <div className="sm:w-1/4 w-full sm:border-r border-gray-300 pr-4">
+          <FilterSection />
         </div>
-        <div className="sm:w-2/3 w-full">
-          <div className="flex flex-col gap-5">
+
+        {/* Job Cards Section */}
+        <div className="sm:w-3/4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {jobs.map((job) => (
               <JobCard key={job.id} job={job} />
             ))}
@@ -36,6 +38,7 @@ const Jobs = () => {
         </div>
       </div>
     </div>
+
   );
 };
 

@@ -2,7 +2,7 @@ import { Link, Outlet } from "react-router-dom"
 
 const Profile = () => {
   return (
-    <div className="py-10">
+    <div className="py-10 container mx-auto">
       <div className="flex flex-col md:flex-row gap-6">
         {/* Sidebar Navigation */}
         <div className="md:w-1/4 w-full">

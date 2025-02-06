@@ -8,7 +8,7 @@ const JobCard = ({ job }) => {
   };
 
   return (
-    <div className="bg-white border-2 border-gray-500 rounded-lg shadow-sm p-6">
+    <div className="bg-white border rounded-lg shadow-lg p-6 ">
       <h3 className="text-xl font-bold text-gray-800">{job.title}</h3>
       <p className="text-gray-600 mt-2">{job.description}</p>
       <div className="mt-4 flex items-center">

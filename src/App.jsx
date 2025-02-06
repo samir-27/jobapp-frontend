@@ -22,8 +22,8 @@ const App = () => {
   return (
     <>
       <ToastContainer position="top-center" />
-      <div className="2xl:mx-96 xl:mx-72 lg:mx-52 md:mx-20 mx-10">
-        {!(location.pathname === "/signin" || location.pathname === "/signup" || location.pathname.startsWith("/company")) ? <Navbar /> : <CompanyNav />}
+      {!(["/signin", "/signup"].includes(location.pathname) || location.pathname.startsWith("/company")) && <Navbar />}
+      <div className="">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/jobs" element={<Jobs />} />
