@@ -18,10 +18,10 @@ const Profile = () => {
               </li>
               <li>
                 <Link
-                  to="postedjobs"
+                  to="appliedjobs"
                   className="block text-center py-4 px-6 bg-indigo-100 hover:bg-indigo-500 hover:text-white rounded-lg font-medium"
                 >
-                  Posted Jobs
+                  Applied Jobs
                 </Link>
               </li>
             </ul>

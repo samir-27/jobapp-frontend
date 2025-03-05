@@ -16,6 +16,7 @@ const Jobs = () => {
     try {
       const response = await fetch(`http://localhost:3000/jobs/company/${ComId}`);
       const data = await response.json();
+      // console.log("job data:",data)
       setJobs(data);
     } catch (error) {
       console.error("Error fetching jobs:", error);

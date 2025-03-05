@@ -3,6 +3,9 @@ import { toast } from "react-toastify";
 
 const CompanyJobCard = ({ job }) => {
     const [isEditing, setIsEditing] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [applications, setApplications] = useState([]);
+
     const [formData, setFormData] = useState({
         title: job.title,
         description: job.description,
@@ -22,6 +25,21 @@ const CompanyJobCard = ({ job }) => {
     const [requirementInputValue, setRequirementInputValue] = useState("");
     const [responsibilityInputValue, setResponsibilityInputValue] = useState("");
     const [niceToHaveInputValue, setNiceToHaveInputValue] = useState("");
+
+    const fetchApplications = async () => {
+        try {
+            const response = await fetch(`http://localhost:3000/applyjob/job/${job._id}`);
+            console.log(response);
+            if (!response.ok) throw new Error("Failed to fetch applications");
+            const data = await response.json();
+            console.log(data);
+            setApplications(data);
+            setIsModalOpen(true);
+        } catch (error) {
+            toast.error("Error fetching applications");
+        }
+    };
+
 
     const handleDelete = async () => {
         try {
@@ -135,6 +153,12 @@ const CompanyJobCard = ({ job }) => {
                 >
                     Update
                 </button>
+                <button
+                    onClick={fetchApplications}
+                    className="mt-4 px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-400"
+                >
+                    View Applications
+                </button>
             </div>
             {isEditing && (
                 <form onSubmit={handleUpdate} className="mt-6">
@@ -245,7 +269,30 @@ const CompanyJobCard = ({ job }) => {
                     >
                         Save
                     </button>
+
                 </form>
+            )}
+
+            {isModalOpen && (
+                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
+                    <div className="bg-white p-6 rounded-lg shadow-lg w-1/2">
+                        <h2 className="text-xl font-bold mb-4">Applications</h2>
+                        <button className="text-gray-600" onClick={() => setIsModalOpen(false)}>✕</button>
+                        {applications.length > 0 ? (
+                            applications.map((app) => (
+                                <div key={app._id} className="p-4 border-b border-gray-300">
+                                    <p><strong>Name:</strong> {app.fullname}</p>
+                                    <p><strong>Phone:</strong> {app.phone}</p>
+                                    <p><strong>Course:</strong> {app.course}</p>
+                                    <p><strong>Education:</strong> {app.education}</p>
+                                    <p><strong>Resume:</strong> <a href={app.resume} className="text-blue-500" target="_blank">View</a></p>
+                                </div>
+                            ))
+                        ) : (
+                            <p>No applications found.</p>
+                        )}
+                    </div>
+                </div>
             )}
         </div>
     );
