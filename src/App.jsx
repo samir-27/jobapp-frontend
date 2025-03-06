@@ -17,6 +17,8 @@ import MyProfile from "./components/MyProfile";
 import JobsList from "./components/AppliedJobs";
 import AppliedJobs from "./components/AppliedJobs";
 import CompanyNavbar from "./components/CompanyNavbar";
+import CompanyProfile from "./pages/CompnyProfile";
+import CompanyMyProfile from "./components/CompanyMyProfile";
 
 const App = () => {
   const location = useLocation();
@@ -24,9 +26,9 @@ const App = () => {
   return (
     <>
       <ToastContainer position="top-center" />
-      {!(["/signin", "/signup"].includes(location.pathname) || location.pathname.startsWith("/company")) && <Navbar />}
+      {!(["/signin", "/signup"].includes(location.pathname) || location.pathname.startsWith("/company")) ? <Navbar /> :  <CompanyNavbar />}
       <div className="">
-            <CompanyNavbar />
+           
         <Routes>
           <Route path="/" element={<Home />} />
           {/* <Route path="/temp" element={<JobsList />} /> */}
@@ -43,7 +45,9 @@ const App = () => {
           {/* Protected Route for company dashboard */}
             <Route path="/company/addjob" element={<AddJob />} />
             <Route path="/company/postedjobs" element={<PostedJobs />} />
- 
+            <Route path="/company/profile" element={<CompanyProfile />} >
+                  <Route index element={<CompanyMyProfile />} />
+            </Route>
         </Routes>
       </div>
     </>
