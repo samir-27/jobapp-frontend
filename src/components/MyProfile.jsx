@@ -11,7 +11,10 @@ const MyProfile = () => {
     address: '',
     education: '',
     course: '',
+    image: '',
   });
+
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -27,6 +30,7 @@ const MyProfile = () => {
         }
 
         const userData = await response.json();
+        console.log(userData)
         setFormData({
           name: userData.name,
           email: userData.email,
@@ -35,6 +39,7 @@ const MyProfile = () => {
           address: userData.address || '',
           education: userData.education || '',
           course: userData.course || '',
+          image: userData.profileImg || '',
         });
       } catch (error) {
         console.error('Error:', error);
@@ -51,6 +56,10 @@ const MyProfile = () => {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedImage(file);
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -59,21 +68,47 @@ const MyProfile = () => {
     const decodedToken = jwtDecode(token);
     const userId = decodedToken.id;
 
+    let imageUrl = formData.image;
+
+    if (selectedImage) {
+      const imageData = new FormData();
+      imageData.append("file", selectedImage);
+      imageData.append("upload_preset", "profileimages");
+
+      try {
+        const uploadResponse = await fetch("https://api.cloudinary.com/v1_1/ddc3h3udr/image/upload", {
+          method: "POST",
+          body: imageData,
+        });
+
+        const uploadResult = await uploadResponse.json();
+        imageUrl = uploadResult.secure_url;
+        console.log("Cloudinary Image URL:", imageUrl);
+      } catch (error) {
+        console.error("Image upload error:", error);
+        toast.error("Failed to upload image");
+        return;
+      }
+    }
+
+    const finalData = { ...formData, image: imageUrl };
+    console.log("Final Data Sent to Backend:", finalData);
+
     try {
       const response = await fetch(`http://localhost:3000/users/${userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(finalData),
       });
-      console.log("fetch user", response)
 
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Network response was not ok');
       }
 
+      console.log("Profile updated successfully");
       toast.success("Profile updated successfully");
     } catch (error) {
       console.error('Error:', error);
@@ -81,10 +116,32 @@ const MyProfile = () => {
     }
   };
 
+
   return (
     <div className="mx-auto mt-5">
-      <div className="bg-white shadow-md rounded-lg p-6">
+      <div className="bg-white rounded-lg ">
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Image Upload */}
+          <div>
+            {selectedImage ? (
+              <img src={URL.createObjectURL(selectedImage)} alt="Selected" className="mt-2 w-32 h-32 rounded-full object-cover" />
+            ) : formData.image ? (
+              <img src={formData.image} alt="Profile" className="mt-2 w-32 h-32 rounded-full object-cover" />
+            ) : (
+              <p className="text-gray-500 mt-2">No image uploaded</p>
+            )}
+            <label className="block text-sm font-medium text-gray-600">Profile Image</label>
+            <input type="file" accept="image/*" onChange={handleImageChange} className="w-full px-3 py-2 border rounded-lg" />
+
+            {/* Show Selected Image Preview or Existing Profile Image */}
+          </div>
+          {/* <div>
+            <label className="block text-sm font-medium text-gray-600">Profile Image</label>
+            <input type="file" accept="image/*" onChange={handleImageChange} className="w-full px-3 py-2 border rounded-lg" />
+            {formData.image && (
+              <img src={formData.image} alt="Profile" className="mt-2 w-32 h-32 rounded-lg object-cover" />
+            )}
+          </div> */}
           {/* User Name & Email - Readonly */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -170,15 +227,15 @@ const MyProfile = () => {
               />
             </div>
             <div>
-            <label className="block text-sm font-medium text-gray-600">State</label>
-            <input
-              type="text"
-              name="state"
-             
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-300"
-              placeholder="Enter your State"
-            />
-          </div>
+              <label className="block text-sm font-medium text-gray-600">State</label>
+              <input
+                type="text"
+                name="state"
+
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-300"
+                placeholder="Enter your State"
+              />
+            </div>
           </div>
 
           {/* Education & Course */}

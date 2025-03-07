@@ -6,7 +6,7 @@ const ApplyJobCard = ({ job }) => {
         navigate(`/job-detail/${job._id}`)
     }
     return (
-      <div className="bg-white shadow-lg rounded-2xl p-5 border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+      <div className="bg-white rounded p-5 border border-2 border-gray-200 hover:shadow-xl transition-shadow duration-300">
         <h2 className="text-xl font-semibold text-gray-800">{job.companyName}</h2>
         <h2>{job.title}</h2>
         <p className="text-gray-600 mt-2">{job.description}</p>
