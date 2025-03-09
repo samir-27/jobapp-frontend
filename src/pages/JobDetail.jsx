@@ -18,6 +18,7 @@ const JobDetailPage = () => {
     address: "",
     education: "diploma",
     course: "",
+    resume: null,
     jobId: id,
     userId: userID,
   });
@@ -44,35 +45,56 @@ const JobDetailPage = () => {
   };
 
   const handleSubmit = async () => {
+    const formDataToSend = new FormData();
+    formDataToSend.append("fullname", formData.fullname);
+    formDataToSend.append("phone", formData.phone);
+    formDataToSend.append("address", formData.address);
+    formDataToSend.append("education", formData.education);
+    formDataToSend.append("course", formData.course);
+    formDataToSend.append("jobId", formData.jobId || id);
+    formDataToSend.append("userId", formData.userId || userID);
+  
+    if (formData.resume instanceof File) {
+      formDataToSend.append("resume", formData.resume);
+    }
+  
+    // Debugging: Log form data to check values
+    console.log("Submitting form data:");
+    for (let pair of formDataToSend.entries()) {
+      console.log(pair[0], pair[1]);
+    }
+  
     try {
       const response = await fetch("http://localhost:3000/applyjob/create", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
+        body: formDataToSend,
       });
-
-      if (response.ok) {
-        toast.success("Application submitted successfully!");
-        setIsModalOpen(false);
-        setFormData({
-          fullname: "",
-          phone: "",
-          address: "",
-          education: "diploma",
-          course: "",
-          jobId: id,
-          userId: userID,
-        });
-      } else {
-        toast.error("Failed to submit application. Try again.");
+  
+      if (!response.ok) {
+        const errorText = await response.text(); // Get server error message
+        throw new Error(errorText || "Failed to submit application");
       }
+  
+      toast.success("Application submitted successfully!");
+      setIsModalOpen(false);
+      setFormData({
+        fullname: "",
+        phone: "",
+        address: "",
+        education: "diploma",
+        course: "",
+        resume: null,
+        jobId: id,
+        userId: userID,
+      });
     } catch (error) {
       console.error("Error submitting application:", error);
-      toast.error("Something went wrong. Please try again.");
+      toast.error(error.message || "Something went wrong. Please try again.");
     }
   };
+  
+  
+
 
   if (!job) {
     return <div>Loading job details...</div>;
@@ -164,6 +186,13 @@ const JobDetailPage = () => {
                 onChange={handleChange}
                 className="w-full p-2 mb-3 border rounded"
               />
+              <input
+                type="file"
+               
+                onChange={(e) => setFormData({ ...formData, resume: e.target.files[0] })}
+                className="w-full p-2 mb-3 border rounded"
+              />
+
               <div className="flex justify-between">
                 <button
                   onClick={handleCloseModal}

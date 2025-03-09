@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { FaCircleUser } from 'react-icons/fa6';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -9,9 +9,7 @@ const CompanyNavbar = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
-    if (token) {
-      setIsAuthenticated(true);
-    }
+    setIsAuthenticated(!!token); // Convert token to boolean
   }, []);
 
   const handleSignin = () => {
@@ -25,7 +23,7 @@ const CompanyNavbar = () => {
   };
 
   return (
-    <nav className="bg-indigo-500 text-white z-50 top-0 sticky ">
+    <nav className="bg-indigo-500 text-white z-50 top-0 sticky">
       <div className="py-4 flex justify-between items-center container mx-auto">
         <div className="text-2xl font-bold">
           <Link to="/">Get Placed</Link>
@@ -35,7 +33,6 @@ const CompanyNavbar = () => {
           <Link to="/company/home" className="hover:text-gray-300 font-medium">Home</Link>
           <Link to="/company/addjob" className="hover:text-gray-300 font-medium">Create Job</Link>
           <Link to="/company/postedjobs" className="hover:text-gray-300 font-medium">Posted Jobs</Link>
-       
 
           {isAuthenticated ? (
             <button
@@ -82,7 +79,7 @@ const CompanyNavbar = () => {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden bg-indigo-500 shadow-lg">
-     <Link to="/company/home" className="hover:text-gray-300 font-medium">Home</Link>
+          <Link to="/company/home" className="hover:text-gray-300 font-medium">Home</Link>
           <Link to="/company/addjob" className="hover:text-gray-300 font-medium">Create Job</Link>
           <Link to="/company/postedjobs" className="hover:text-gray-300 font-medium">Posted Jobs</Link>
 
@@ -105,6 +102,6 @@ const CompanyNavbar = () => {
       )}
     </nav>
   );
-}
+};
 
-export default CompanyNavbar
+export default CompanyNavbar;

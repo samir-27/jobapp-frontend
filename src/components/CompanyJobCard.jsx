@@ -285,7 +285,7 @@ const CompanyJobCard = ({ job }) => {
                                     <p><strong>Phone:</strong> {app.phone}</p>
                                     <p><strong>Course:</strong> {app.course}</p>
                                     <p><strong>Education:</strong> {app.education}</p>
-                                    <p><strong>Resume:</strong> <a href={app.resume} className="text-blue-500" target="_blank">View</a></p>
+                                    <p><strong>Resume:</strong> <a href={app.resumeUrl} className="text-blue-500" target="_blank">View</a></p>
                                 </div>
                             ))
                         ) : (
