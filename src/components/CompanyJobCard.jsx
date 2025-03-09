@@ -132,30 +132,38 @@ const CompanyJobCard = ({ job }) => {
     };
 
     return (
-        <div className="bg-white border border-gray-200 rounded-lg shadow-sm p-6 m-2">
-            <h3 className="text-xl font-bold text-gray-800">{job.title}</h3>
-            <p className="text-gray-600 mt-2">{job.description}</p>
-            <div className="mt-4 flex items-center">
-                <span className="text-sm font-medium text-gray-700">Salary: ${job.salary}</span>
-                <span className="ml-4 text-sm font-medium text-gray-700">Experience: {job.experience}</span>
-                <span className="ml-4 text-sm font-medium text-gray-700">Company: {job.companyName}</span>
+        <div className="bg-white border border-gray-300 rounded-xl shadow-lg p-6 transition-all hover:shadow-xl">
+            <h3 className="text-2xl font-semibold text-gray-900">{job.title}</h3>
+            <p className="text-gray-700 mt-2">{job.description}</p>
+
+            <div className="mt-4 flex flex-wrap gap-4 text-gray-600 text-sm">
+                <span className="flex items-center gap-1 font-medium">
+                    💰 Salary: <span className="text-gray-800">${job.salary}</span>
+                </span>
+                <span className="flex items-center gap-1 font-medium">
+                    🏆 Experience: <span className="text-gray-800">{job.experience}</span>
+                </span>
+                <span className="flex items-center gap-1 font-medium">
+                    🏢 Company: <span className="text-gray-800">{job.companyName}</span>
+                </span>
             </div>
-            <div className="flex gap-5">
+
+            <div className="mt-5 flex flex-wrap gap-3">
                 <button
                     onClick={handleDelete}
-                    className="mt-4 px-6 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-500"
+                    className="px-5 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-500 transition"
                 >
                     Delete
                 </button>
                 <button
                     onClick={() => setIsEditing(true)}
-                    className="mt-4 px-6 py-2 bg-indigo-500 text-white font-semibold rounded-lg hover:bg-indigo-400"
+                    className="px-5 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-500 transition"
                 >
                     Update
                 </button>
                 <button
                     onClick={fetchApplications}
-                    className="mt-4 px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-400"
+                    className="px-5 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-500 transition"
                 >
                     View Applications
                 </button>

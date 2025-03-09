@@ -6,23 +6,32 @@ const JobCard = ({ job }) => {
   const handleApplyNow = () => {
     navigate(`/job-detail/${job._id}`);
   };
-
+  console.log(job)
   return (
-    <div className="bg-white border-2 rounded-lg shadow-lg p-6 ">
-      <h3 className="text-xl font-bold text-gray-800">{job.title}</h3>
-      <p className="text-gray-600 mt-2">{job.description}</p>
-      <div className="mt-4 flex items-center">
-        <span className="text-sm font-medium text-gray-700">Salary: ${job.salary}</span>
-        <span className="ml-4 text-sm font-medium text-gray-700">Experience: {job.experience}</span>
-        <span className="ml-4 text-sm font-medium text-gray-700">Company: {job.companyName}</span>
-      </div>
-      <button
-        onClick={handleApplyNow}
-        className="mt-4 px-6 py-2 bg-indigo-500 text-white font-semibold rounded-lg hover:bg-indigo-600"
-      >
-        View Details
-      </button>
+    <div className="bg-white border border-gray-200 rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all transform hover:scale-[1.03]">
+  <div className="flex items-center gap-4 mb-4">
+    <img src={job.company.logo} alt="Company Logo" className="w-14 h-14 rounded-full shadow-md" />
+    <div>
+      <h3 className="text-2xl font-semibold text-gray-800">{job.title}</h3>
+      <p className="text-gray-600 text-sm">{job.company.name}</p>
     </div>
+  </div>
+
+  <p className="text-gray-600 mb-4 line-clamp-3">{job.description}</p>
+
+  <div className="flex flex-wrap gap-3 text-sm font-medium text-gray-700">
+    <span className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-lg">💰 Salary: ${job.salary}</span>
+    <span className="bg-green-100 text-green-700 px-3 py-1 rounded-lg">📅 Experience: {job.experience}</span>
+  </div>
+
+  <button
+    onClick={handleApplyNow}
+    className="mt-6 w-full py-2 bg-indigo-500 text-white font-semibold rounded-lg hover:bg-indigo-600 transition-all"
+  >
+    View Details
+  </button>
+</div>
+
   );
 };
 

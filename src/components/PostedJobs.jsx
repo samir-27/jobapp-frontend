@@ -27,15 +27,13 @@ const Jobs = () => {
   },);
 
   return (
-    <div className="p-3">
-      <div className="flex sm:flex-row gap-10 flex-col">
+    <div className="py-3 container mx-auto">
         <div className="w-full">
-          <div className="">
+          <div className="grid grid-cols-3 gap-10">
             {jobs.map((job) => (
               <CompanyJobCard key={job.id} job={job} />
             ))}
           </div>
-        </div>
       </div>
     </div>
   );

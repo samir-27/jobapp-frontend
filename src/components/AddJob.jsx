@@ -12,10 +12,10 @@ const FormExample = () => {
   const [jobType, setJobType] = useState('');
   const [skills, setSkills] = useState([]);
   const [experience, setExperience] = useState('');
-  const [requirementInputValue,setRequirementInputValue]=useState('')
-  const [responsibilityInputValue,setResponsibilityInputValue]=useState('')
-  const [niceToHaveInputValue,setNiceToHaveInputValue]=useState('')
-  const [skillInputValue,setSkillInputValue]=useState('')
+  const [requirementInputValue, setRequirementInputValue] = useState('')
+  const [responsibilityInputValue, setResponsibilityInputValue] = useState('')
+  const [niceToHaveInputValue, setNiceToHaveInputValue] = useState('')
+  const [skillInputValue, setSkillInputValue] = useState('')
   const [requirements, setRequirements] = useState([]);
   const [responsibilities, setResponsibilities] = useState([]);
   const [niceToHave, setNiceToHave] = useState([]);
@@ -125,7 +125,7 @@ const FormExample = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Network response was not ok'); 
+        throw new Error('Network response was not ok');
       }
 
       const result = await response.json();
@@ -137,240 +137,76 @@ const FormExample = () => {
   };
 
   return (
-    <div className="bg-gray-100">
-      <form onSubmit={handleSubmit} className="bg-indigo-50 p-8 rounded-lg">
-        <h2 className="text-2xl font-bold text-indigo-500 mb-6">Add Job</h2>
+<div className="p-6 container mx-auto">
+  <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg border shadow-md grid grid-cols-1 md:grid-cols-2 gap-6">
+    <h2 className="text-2xl font-bold text-indigo-500 mb-6 md:col-span-2">Add Job</h2>
 
-        <div className="mb-4">
-          <label htmlFor="title" className="block text-sm font-medium text-gray-700">Title</label>
-          <input
-            type="text"
-            id="title"
-            onChange={handleTitleChange}
-            value={title}
-            placeholder="Enter Title"
-            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-          />
-        </div>
+    <input type="text" id="title" onChange={handleTitleChange} value={title} placeholder="Enter Title" className="border p-2 rounded w-full" />
+    <input type="text" id="description" onChange={handleDescriptionChange} value={description} placeholder="Enter Description" className="border p-2 rounded w-full" />
+    <input type="text" id="role" onChange={handleRoleChange} value={role} placeholder="Enter Role" className="border p-2 rounded w-full" />
+    <input type="text" id="salary" onChange={handleSalaryChange} value={salary} placeholder="Enter Salary" className="border p-2 rounded w-full" />
+    <select id="experience" value={experience} onChange={handleExperienceChange} className="border p-2 rounded w-full">
+      <option value="">Select Experience...</option>
+      <option value="fresher">Fresher</option>
+      <option value="1-3years">1-3 years</option>
+      <option value="3-5years">3-5 years</option>
+      <option value="5-10years">5-10 years</option>
+      <option value="10-20years">10-20 years</option>
+    </select>
+    <select id="location" value={location} onChange={handleLocationChange} className="border p-2 rounded w-full">
+      <option value="">Select Location...</option>
+      <option value="remote">Remote</option>
+      <option value="hybrid">Hybrid</option>
+      <option value="on-site">On-site</option>
+    </select>
+    <select id="jobType" value={jobType} onChange={handleJobTypeChange} className="border p-2 rounded w-full">
+      <option value="">Select Job Type...</option>
+      <option value="Full-Time">Full-Time</option>
+      <option value="Part-Time">Part-Time</option>
+      <option value="Contract">Contract</option>
+    </select>
 
-        <div className="mb-4">
-          <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
-          <input
-            type="text"
-            id="description"
-            onChange={handleDescriptionChange}
-            value={description}
-            placeholder="Enter Description"
-            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-          />
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="role" className="block text-sm font-medium text-gray-700">Role</label>
-          <input
-            type="text"
-            id="role"
-            onChange={handleRoleChange}
-            value={role}
-            placeholder="Enter Role"
-            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-          />
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="salary" className="block text-sm font-medium text-gray-700">Salary</label>
-          <input
-            type="text"
-            id="salary"
-            onChange={handleSalaryChange}
-            value={salary}
-            placeholder="Enter Salary"
-            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-          />
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="company" className="block text-sm font-medium text-gray-700">Company Name</label>
-          <input
-            type="text"
-            id="company"
-            onChange={handleCompanyChange}
-            value={companyName}
-            placeholder="Enter Company Name"
-            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-          />
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="experience" className="block text-sm font-medium text-gray-700">Experience</label>
-          <select
-            id="experience"
-            value={experience}
-            onChange={handleExperienceChange}
-            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-          >
-            <option value="">Select...</option>
-            <option value="fresher">Fresher</option>
-            <option value="1-3years">1-3 years</option>
-            <option value="3-5years">3-5 years</option>
-            <option value="5-10years">5-10 years</option>
-            <option value="10-20years">10-20 years</option>
-          </select>
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="location" className="block text-sm font-medium text-gray-700">Location</label>
-          <select
-            id="location"
-            value={location}
-            onChange={handleLocationChange}
-            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-          >
-            <option value="">Select...</option>
-            <option value="remote">Remote</option>
-            <option value="hybrid">Hybrid</option>
-            <option value="on-site">On-site</option>
-          </select>
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="jobType" className="block text-sm font-medium text-gray-700">Job Type</label>
-          <select
-            id="jobType"
-            value={jobType}
-            onChange={handleJobTypeChange}
-            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
-          >
-            <option value="">Select...</option>
-            <option value="Full-Time">Full-Time</option>
-            <option value="Part-Time">Part-Time</option>
-            <option value="Contract">Contract</option>
-          </select>
-        </div>
-
-        {/* Skills Input */}
-        <div className="mb-4">
-          <label htmlFor="skills" className="block text-sm font-medium text-gray-700">Add Skills</label>
-          <div className="flex items-center">
-            <input
-              type="text"
-              id="skills"
-              value={skillInputValue}
-              onChange={handleSkillInputChange}
-              placeholder="Enter skill"
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-l-lg focus:ring-indigo-500 focus:border-indigo-500"
-            />
-            <button
-              type="button"
-              onClick={handleAddSkill}
-              className="mt-1 px-4 py-2 bg-indigo-500 text-white rounded-r-lg hover:bg-indigo-600"
-            >
-              Add
-            </button>
-          </div>
-          <ul className="mt-2">
-            {skills.map((skill, index) => (
-              <li key={index} className="text-sm text-gray-700">
-                {skill}
-              </li>
-            ))}
-          </ul>
-        </div>
-
- 
-        <div className="mb-4">
-          <label htmlFor="requirements" className="block text-sm font-medium text-gray-700">Add Requirements</label>
-          <div className="flex items-center">
-            <input
-              type="text"
-              id="requirements"
-              value={requirementInputValue}
-              onChange={handleRequirementInputChange}
-              placeholder="Enter requirement"
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-l-lg focus:ring-indigo-500 focus:border-indigo-500"
-            />
-            <button
-              type="button"
-              onClick={handleAddRequirement}
-              className="mt-1 px-4 py-2 bg-indigo-500 text-white rounded-r-lg hover:bg-indigo-600"
-            >
-              Add
-            </button>
-          </div>
-          <ul className="mt-2">
-            {requirements.map((req, index) => (
-              <li key={index} className="text-sm text-gray-700">
-                {req}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-
-        <div className="mb-4">
-          <label htmlFor="responsibilities" className="block text-sm font-medium text-gray-700">Add Responsibilities</label>
-          <div className="flex items-center">
-            <input
-              type="text"
-              id="responsibilities"
-              value={responsibilityInputValue}
-              onChange={handleResponsibilityInputChange}
-              placeholder="Enter responsibility"
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-l-lg focus:ring-indigo-500 focus:border-indigo-500"
-            />
-            <button
-              type="button"
-              onClick={handleAddResponsibility}
-              className="mt-1 px-4 py-2 bg-indigo-500 text-white rounded-r-lg hover:bg-indigo-600"
-            >
-              Add
-            </button>
-          </div>
-          <ul className="mt-2">
-            {responsibilities.map((resp, index) => (
-              <li key={index} className="text-sm text-gray-700">
-                {resp}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="niceToHave" className="block text-sm font-medium text-gray-700">Add Nice-to-Have</label>
-          <div className="flex items-center">
-            <input
-              type="text"
-              id="niceToHave"
-              value={niceToHaveInputValue}
-              onChange={handleNiceToHaveInputChange}
-              placeholder="Enter nice-to-have"
-              className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-l-lg focus:ring-indigo-500 focus:border-indigo-500"
-            />
-            <button
-              type="button"
-              onClick={handleAddNiceToHave}
-              className="mt-1 px-4 py-2 bg-indigo-500 text-white rounded-r-lg hover:bg-indigo-600"
-            >
-              Add
-            </button>
-          </div>
-          <ul className="mt-2">
-            {niceToHave.map((niceTo, index) => (
-              <li key={index} className="text-sm text-gray-700">
-                {niceTo}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <button
-          type="submit"
-          className="w-full px-4 py-2 bg-indigo-500 text-white font-medium rounded-lg hover:bg-indigo-600"
-        >
-          Submit
-        </button>
-      </form>
+    <div className="md:col-span-2">
+      <label className="block font-medium">Skills</label>
+      <div className="flex items-center">
+        <input type="text" id="skills" value={skillInputValue} onChange={handleSkillInputChange} placeholder="Enter skill" className="border p-2 rounded-l w-full" />
+        <button type="button" onClick={handleAddSkill} className="px-4 py-2 bg-indigo-500 text-white rounded-r">Add</button>
+      </div>
+      <ul className="mt-2">{skills.map((skill, index) => (<li key={index} className="text-sm">{skill}</li>))}</ul>
     </div>
+
+    <div className="md:col-span-2">
+      <label className="block font-medium">Requirements</label>
+      <div className="flex items-center">
+        <input type="text" id="requirements" value={requirementInputValue} onChange={handleRequirementInputChange} placeholder="Enter requirement" className="border p-2 rounded-l w-full" />
+        <button type="button" onClick={handleAddRequirement} className="px-4 py-2 bg-indigo-500 text-white rounded-r">Add</button>
+      </div>
+      <ul className="mt-2">{requirements.map((req, index) => (<li key={index} className="text-sm">{req}</li>))}</ul>
+    </div>
+
+    <div className="md:col-span-2">
+      <label className="block font-medium">Responsibilities</label>
+      <div className="flex items-center">
+        <input type="text" id="responsibilities" value={responsibilityInputValue} onChange={handleResponsibilityInputChange} placeholder="Enter responsibility" className="border p-2 rounded-l w-full" />
+        <button type="button" onClick={handleAddResponsibility} className="px-4 py-2 bg-indigo-500 text-white rounded-r">Add</button>
+      </div>
+      <ul className="mt-2">{responsibilities.map((resp, index) => (<li key={index} className="text-sm">{resp}</li>))}</ul>
+    </div>
+
+    <div className="md:col-span-2">
+      <label className="block font-medium">Nice-to-Have</label>
+      <div className="flex items-center">
+        <input type="text" id="niceToHave" value={niceToHaveInputValue} onChange={handleNiceToHaveInputChange} placeholder="Enter nice-to-have" className="border p-2 rounded-l w-full" />
+        <button type="button" onClick={handleAddNiceToHave} className="px-4 py-2 bg-indigo-500 text-white rounded-r">Add</button>
+      </div>
+      <ul className="mt-2">{niceToHave.map((niceTo, index) => (<li key={index} className="text-sm">{niceTo}</li>))}</ul>
+    </div>
+
+    <button type="submit" className="md:col-span-2 w-full px-4 py-2 bg-indigo-500 text-white font-medium rounded hover:bg-indigo-600">Submit</button>
+  </form>
+</div>
+
+
   );
 };
 
