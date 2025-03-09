@@ -11,8 +11,9 @@ const CompanyMyProfile = () => {
     address: '',
     city: '',
     companySize: '',
+    image: '',
   });
-
+  const [selectedImage, setSelectedImage] = useState(null);
   useEffect(() => {
     const fetchUserData = async () => {
       const token = localStorage.getItem('authToken');
@@ -35,6 +36,7 @@ const CompanyMyProfile = () => {
           address: companyData.address || '',
           city: companyData.city || '',
           companySize: companyData.companySize || '',
+          image: companyData.profileImg || '',
         });
       } catch (error) {
         console.error('Error:', error);
@@ -49,6 +51,10 @@ const CompanyMyProfile = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    setSelectedImage(file);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -56,13 +62,39 @@ const CompanyMyProfile = () => {
     const decodedToken = jwtDecode(token);
     const userId = decodedToken.id;
 
+    let imageUrl = formData.image;
+    
+    if (selectedImage) {
+      const imageData = new FormData();
+      imageData.append("file", selectedImage);
+      imageData.append("upload_preset", "profileimages");
+
+      try {
+        const uploadResponse = await fetch("https://api.cloudinary.com/v1_1/ddc3h3udr/image/upload", {
+          method: "POST",
+          body: imageData,
+        });
+       const uploadResult = await uploadResponse.json();
+        imageUrl = uploadResult.secure_url;
+        console.log("Cloudinary Image URL:", imageUrl);
+      } catch (error) {
+        console.error("Image upload error:", error);
+        toast.error("Failed to upload image");
+        return;
+      }
+    }
+
+    const finalData = { ...formData, image: imageUrl };
+    console.log("Final Data Sent to Backend:", finalData);
+
+
     try {
       const response = await fetch(`http://localhost:3000/companies/${userId}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(finalData),
       });
 
       if (!response.ok) {
@@ -81,6 +113,19 @@ const CompanyMyProfile = () => {
     <div className="mx-auto mt-5">
       <div className="bg-white shadow-md rounded-lg p-6">
         <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+            {selectedImage ? (
+              <img src={URL.createObjectURL(selectedImage)} alt="Selected" className="mt-2 w-32 h-32 rounded-full object-cover" />
+            ) : formData.image ? (
+              <img src={formData.image} alt="Profile" className="mt-2 w-32 h-32 rounded-full object-cover" />
+            ) : (
+              <p className="text-gray-500 mt-2">No image uploaded</p>
+            )}
+            <label className="block text-sm font-medium text-gray-600">Profile Image</label>
+            <input type="file" accept="image/*" onChange={handleImageChange} className="w-full px-3 py-2 border rounded-lg" />
+
+            {/* Show Selected Image Preview or Existing Profile Image */}
+          </div>
           <div>
             <label className="block text-sm font-medium text-gray-600">Company Name</label>
             <input type="text" name="name" value={formData.name} readOnly className="w-full px-3 py-2 border bg-gray-100 rounded-lg" />
