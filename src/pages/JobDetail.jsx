@@ -99,19 +99,19 @@ const JobDetailPage = () => {
   if (!job) {
     return <div>Loading job details...</div>;
   }
-
+  console.log(job)
   return (
-    <div className="p-8 border-t-0 border-2">
+    <div className="py-10 container mx-auto">
       <div className="flex pb-4">
         <div>
           <img
-            className="rounded-full w-14 h-14 object-cover"
-            src="https://bookface-images.s3.amazonaws.com/small_logos/5a28987b3e1b3effc2a33ce770fc25f4424fc775.png"
+            className="rounded-full w-20 h-20 object-cover"
+            src={job.company.logo}
             alt=""
           />
         </div>
         <div className="my-auto px-2">
-          <h1 className="text-2xl"> {job.companyName}</h1>
+          <h1 className="text-3xl font-bold"> {job.company.name}</h1>
         </div>
       </div>
       <div>

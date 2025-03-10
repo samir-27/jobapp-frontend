@@ -5,7 +5,7 @@ const Featuredjob = () => {
     <div className="bg-indigo-100">
         <div className="container mx-auto">
         <h1 className="text-black text-4xl font-bold py-10">Featured job</h1>
-        <div className="grid grid-cols-3 gap-10">
+        <div className="grid grid-cols-2 gap-x-40 gap-y-10">
         <FeaturedJobCard />
         <FeaturedJobCard />
         <FeaturedJobCard />
