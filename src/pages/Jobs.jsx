@@ -22,7 +22,10 @@ const Jobs = () => {
   }, [searchParams]);
 
   return (
-    <div className="mt-5 container mx-auto">
+    <div className="bg-blue-50 h-screen">
+
+
+    <div className="pt-5 container mx-auto bg-blue-50">
       <div className="flex sm:flex-row gap-10 flex-col">
         <div className="sm:w-1/4 w-full sm:border-r border-gray-300 pr-4">
           <FilterSection />
@@ -39,6 +42,7 @@ const Jobs = () => {
       </div>
     </div>
 
+    </div>
   );
 };
 

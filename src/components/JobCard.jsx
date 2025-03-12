@@ -8,7 +8,7 @@ const JobCard = ({ job }) => {
   };
   console.log(job)
   return (
-    <div className="bg-white border border-gray-200 rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all transform hover:scale-[1.03]">
+    <div className="bg-white border shadow-md border-gray-200 rounded p-6 transition-all transform hover:scale-[1.03]">
   <div className="flex items-center gap-4 mb-4">
     <img src={job.company.logo} alt="Company Logo" className="w-14 h-14 rounded-full shadow-md" />
     <div>

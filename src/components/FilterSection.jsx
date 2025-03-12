@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Accordion, AccordionItem as Item } from "@szhsin/react-accordion";
 import { useSearchParams } from 'react-router-dom';
 
 const AccordionComponent = () => {
@@ -7,7 +6,8 @@ const AccordionComponent = () => {
   const [selectedFilters, setSelectedFilters] = useState({});
   const [skillInput, setSkillInput] = useState('');
   const [skillsArray, setSkillsArray] = useState([]);
-  
+  const [openAccordion, setOpenAccordion] = useState(null);
+
   const filters = [
     {
       id: 'location',
@@ -65,12 +65,9 @@ const AccordionComponent = () => {
   const handleClearFilters = () => {
     setSelectedFilters({});
     setSkillsArray([]);
-    
-    // Remove all search params
     const keysToRemove = Array.from(searchParams.keys());
     keysToRemove.forEach((key) => searchParams.delete(key));
-  
-    setSearchParams(searchParams); // Update the search params state
+    setSearchParams(searchParams);
   };
 
   useEffect(() => {
@@ -91,25 +88,12 @@ const AccordionComponent = () => {
     setSearchParams(searchParams);
   }, [skillsArray, selectedFilters, searchParams, setSearchParams]);
 
-  const AccordionItem = ({ header, children }) => (
-    <Item
-      header={() => <>{header}</>}
-      className="mb-2"
-      buttonProps={{
-        className: () =>
-          `flex w-full p-4 text-left bg-slate-100 hover:bg-slate-200 text-lg font-bold rounded-md`,
-      }}
-      contentProps={{
-        className: "transition-height duration-200 ease-out",
-      }}
-      panelProps={{ className: "p-4" }}
-    >
-      {children}
-    </Item>
-  );
+  const toggleAccordion = (id) => {
+    setOpenAccordion((prev) => (prev === id ? null : id));
+  };
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 bg-white p-6 rounded-lg shadow-md">
       <div>
         <label className="text-lg font-bold">Job Title</label>
         <input
@@ -118,7 +102,7 @@ const AccordionComponent = () => {
           value={selectedFilters.title || ''}
           onChange={(e) => handleFilterChange('title', e.target.value)}
           placeholder="Search by job title"
-          className="w-full p-2 border border-gray-300 rounded-md"
+          className="w-full p-2 border border-blue-300 rounded-md"
         />
       </div>
 
@@ -130,7 +114,7 @@ const AccordionComponent = () => {
             value={skillInput}
             onChange={handleSkillInputChange}
             placeholder="Search by skills"
-            className="w-full p-2 border border-gray-300 rounded-md"
+            className="w-full p-2 border border-blue-300 rounded-md"
           />
           <button
             className="bg-indigo-500 text-white px-4 rounded-md"
@@ -143,13 +127,10 @@ const AccordionComponent = () => {
           {skillsArray.map((skill) => (
             <span
               key={skill}
-              className="bg-indigo-200  border-2 px-2 py-1 rounded-full text-sm mr-2"
+              className="bg-indigo-200 border-2 px-2 py-1 rounded-full text-sm mr-2"
             >
               {skill}
-              <button
-                className="ml-1 "
-                onClick={() => handleSkillRemove(skill)}
-              >
+              <button className="ml-1" onClick={() => handleSkillRemove(skill)}>
                 &times;
               </button>
             </span>
@@ -157,10 +138,16 @@ const AccordionComponent = () => {
         </div>
       </div>
 
-      <Accordion>
-        {filters.map((filter) => (
-          <AccordionItem key={filter.id} header={filter.name} >
-            <div className="flex flex-col space-y-2">
+      {filters.map((filter) => (
+        <div key={filter.id} className="border rounded-md">
+          <button
+            onClick={() => toggleAccordion(filter.id)}
+            className="w-full text-left p-4 bg-blue-50 hover:bg-blue-100 text-lg font-bold rounded-md"
+          >
+            {filter.name}
+          </button>
+          {openAccordion === filter.id && (
+            <div className="p-4 border-t">
               {filter.options.map((option) => (
                 <label key={option.value} className="flex items-center space-x-2">
                   <input
@@ -175,9 +162,10 @@ const AccordionComponent = () => {
                 </label>
               ))}
             </div>
-          </AccordionItem>
-        ))}
-      </Accordion>
+          )}
+        </div>
+      ))}
+
       <button
         className="bg-indigo-500 p-2 rounded-md text-white font-semibold w-full"
         onClick={handleClearFilters}

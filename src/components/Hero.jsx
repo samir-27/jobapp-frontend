@@ -1,7 +1,7 @@
 const Hero = () => {
     return (
-        <div className="container mx-auto">
-            <div className="flex">
+        <div className=" bg-white">
+            <div className="flex container mx-auto">
                 <div className="w-1/2 flex flex-col justify-center">
                     <h1 className="text-7xl font-bold my-5">Unlock d<span className="text-indigo-500">oo</span>rs to new</h1>
                     <h1 className="text-7xl font-bold">opportunities</h1>

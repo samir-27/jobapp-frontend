@@ -1,45 +1,24 @@
-import React from 'react'
+import React from 'react';
 
 const AboutHero = () => {
   return (
-<div className="container mx-auto flex justify-center items-center h-92vh">
-      <div className="h-96 w-full relative">
-        <div className="child absolute inset-0 m-auto h-56 w-7/12 px-20">
-          <h1 className="text-center font-bold text-6xl py-5">Our path to progress and growth</h1>
-          <p className="text-center">
-            Join us as we continue our journey of innovation and development. Our commitment to progress and growth drives us to create impactful solutions that shape the future of our industry.
-          </p>
-        </div>
-
-        {/* Image Animations on Scroll */}
-        <div className="w-60 absolute -bottom-40 left-52 motion-safe:animate-[scrollEffect_3s_ease-in-out_infinite]">
-          <img className="rounded-3xl" src="https://cdn.prod.website-files.com/66b757e42412d2f5e0906c3d/66c42d0f0777abd1e1afea64_about-05.avif" alt="" />
-        </div>
-        <div className="w-44 absolute -top-36 left-64 motion-safe:animate-[scrollEffect_3s_ease-in-out_infinite]">
-          <img className="rounded-3xl" src="https://cdn.prod.website-files.com/66b757e42412d2f5e0906c3d/66c42d0f0e625168648e377f_about-03.avif" alt="" />
-        </div>
-        <div className="w-72 absolute top-28 left-0 motion-safe:animate-[scrollEffect_3s_ease-in-out_infinite]">
-          <img className="rounded-3xl" src="https://cdn.prod.website-files.com/66b757e42412d2f5e0906c3d/66c42da795f67677f2bfcf5d_about-06.avif" alt="" />
-        </div>
-        <div className="w-72 absolute -top-28 right-4 motion-safe:animate-[scrollEffect_3s_ease-in-out_infinite]">
-          <img className="rounded-3xl" src="https://cdn.prod.website-files.com/66b757e42412d2f5e0906c3d/66c438319d796978ec1f4909_mission-01-p-500.avif" alt="" />
-        </div>
-        <div className="w-60 absolute -bottom-28 right-40 motion-safe:animate-[scrollEffect_3s_ease-in-out_infinite]">
-          <img className="rounded-3xl" src="https://cdn.prod.website-files.com/66b757e42412d2f5e0906c3d/66c42d0f32324b40f83423c3_about-04.avif" alt="" />
-        </div>
+    <section 
+    className="relative w-full h-screen flex items-center justify-center text-center text-white bg-cover bg-center" 
+    style={{ backgroundImage: "url('https://img.freepik.com/free-photo/guy-shows-document-girl-group-young-freelancers-office-have-conversation-working_146671-13569.jpg?t=st=1741758412~exp=1741762012~hmac=dd66bdb7386be859ccc4b801974c53b40dfc660f644f7f2b060f7b1c6b9ac969&w=1060')" }}
+  >
+    <div className="absolute inset-0 bg-black bg-opacity-70"></div>
+    <div className="relative z-10 max-w-3xl px-6">
+      <h1 className="text-4xl md:text-6xl font-bold mb-6">Our Path to Progress and Growth</h1>
+      <p className="text-lg md:text-xl mb-8">
+        Join us as we continue our journey of innovation and development. Our commitment to progress and growth drives us to create impactful solutions that shape the future of our industry.
+      </p>
+      <div className="flex justify-center space-x-4">
+        <button className="bg-indigo-500 hover:bg-indigo-600 px-6 py-3 rounded text-lg">View Companies</button>
+        <button className="bg-gray-200 text-gray-900 hover:bg-gray-300 px-6 py-3 rounded text-lg">View Job Seekers</button>
       </div>
-
-      {/* Tailwind Keyframes */}
-      <style>
-        {`
-          @keyframes scrollEffect {
-            0%, 100% { transform: scaleY(1); }
-            50% { transform: scaleY(0.92); }
-          }
-          `}
-      </style>
     </div>
-  )
-}
+  </section>
+  );
+};
 
-export default AboutHero
+export default AboutHero;
