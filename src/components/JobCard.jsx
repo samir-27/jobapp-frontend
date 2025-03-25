@@ -20,13 +20,13 @@ const JobCard = ({ job }) => {
   <p className="text-gray-600 mb-4 line-clamp-3">{job.description}</p>
 
   <div className="flex flex-wrap gap-3 text-sm font-medium text-gray-700">
-    <span className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-lg">💰 Salary: ${job.salary}</span>
+    <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-lg">💰 Salary: ${job.salary}</span>
     <span className="bg-green-100 text-green-700 px-3 py-1 rounded-lg">📅 Experience: {job.experience}</span>
   </div>
 
   <button
     onClick={handleApplyNow}
-    className="mt-6 w-full py-2 bg-indigo-500 text-white font-semibold rounded-lg hover:bg-indigo-600 transition-all"
+    className="mt-6 w-full py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-600 transition-all"
   >
     View Details
   </button>

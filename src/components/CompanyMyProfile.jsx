@@ -154,7 +154,7 @@ const CompanyMyProfile = () => {
             <label className="block text-sm font-medium text-gray-600">Company Size</label>
             <input type="text" name="companySize" value={formData.companySize} onChange={handleChange} className="w-full px-3 py-2 border rounded-lg" />
           </div>
-          <button type="submit" className="w-full bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600">
+          <button type="submit" className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600">
             Update Profile
           </button>
         </form>

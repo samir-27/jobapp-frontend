@@ -136,7 +136,7 @@ const JobDetailPage = () => {
           </div>
           <button
             onClick={handleApplyNow}
-            className="mt-4 px-4 py-2 bg-indigo-500 text-white rounded hover:bg-indigo-600"
+            className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
             Apply Now
           </button>
@@ -202,7 +202,7 @@ const JobDetailPage = () => {
                 </button>
                 <button
                   onClick={handleSubmit}
-                  className="px-4 py-2 bg-indigo-500 text-white rounded hover:bg-indigo-600"
+                  className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
                 >
                   Submit
                 </button>
@@ -214,7 +214,7 @@ const JobDetailPage = () => {
       <h1 className="text-2xl my-6">About The Role</h1>
       <p>{job.description}</p>
       <div>
-        <h1 className="text-xl font-semibold my-4 text-indigo-500 uppercase">
+        <h1 className="text-xl font-semibold my-4 text-blue-500 uppercase">
           Skills:
         </h1>
         <ul className="list-disc pl-5">

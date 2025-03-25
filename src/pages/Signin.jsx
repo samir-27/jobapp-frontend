@@ -65,9 +65,9 @@ const Signin = () => {
   };
 
   return (
-    <div className="bg-indigo-50 flex justify-center items-center">
+    <div className="bg-blue-50 flex justify-center items-center">
       {/* Image Section */}
-      <div className="w-1/2 h-92vh hidden lg:block bg-indigo-100">
+      <div className="w-1/2 h-92vh hidden lg:block bg-blue-100">
         <img
           src={Bgimg}
           alt="Illustration"
@@ -90,7 +90,7 @@ const Signin = () => {
                 placeholder={Placeholder.email}
                 value={formData.email}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2 border-2 border-gray-400 focus:border-indigo-500 focus:outline-none rounded-md shadow-sm text-gray-900"
+                className="w-full px-4 py-2 border-2 border-gray-400 focus:border-blue-500 focus:outline-none rounded-md shadow-sm text-gray-900"
                 required
               />
             </div>
@@ -106,7 +106,7 @@ const Signin = () => {
                 placeholder={Placeholder.password}
                 value={formData.password}
                 onChange={handleInputChange}
-                className="w-full px-4 py-2 border-2 border-gray-400 focus:border-indigo-500 focus:outline-none rounded-md shadow-sm text-gray-900"
+                className="w-full px-4 py-2 border-2 border-gray-400 focus:border-blue-500 focus:outline-none rounded-md shadow-sm text-gray-900"
                 required
               />
             </div>
@@ -115,7 +115,7 @@ const Signin = () => {
             <p className="pb-2">
               Haven&apos;t created an account?{" "}
               <span
-                className="text-indigo-500 font-bold cursor-pointer"
+                className="text-blue-500 font-bold cursor-pointer"
                 onClick={handleSignupRedirect}
               >
                 Sign Up
@@ -131,7 +131,7 @@ const Signin = () => {
                 
                 handleSubmit(e, "user");
               }}
-              className="w-1/2 bg-indigo-700   text-white py-2 rounded-md hover:bg-indigo-800 shadow-md transition"
+              className="w-1/2 bg-blue-700   text-white py-2 rounded-md hover:bg-blue-800 shadow-md transition"
               >
               User Sign In
             </button>

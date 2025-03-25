@@ -25,7 +25,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-indigo-500 text-white z-50 top-0 sticky ">
+    <nav className="bg-blue-500 text-white z-50 top-0 sticky ">
       <div className="py-4 flex justify-between items-center container mx-auto">
         <div className="text-2xl font-bold">
           <Link to="/">Get Placed</Link>
@@ -40,14 +40,14 @@ const Navbar = () => {
           {isAuthenticated ? (
             <button
               onClick={handleLogout}
-              className="px-4 py-2 bg-white text-indigo-500 rounded-md shadow hover:bg-gray-200"
+              className="px-4 py-2 bg-white text-blue-500 rounded-md shadow hover:bg-gray-200"
             >
               Log Out
             </button>
           ) : (
             <button
               onClick={handleSignin}
-              className="px-4 py-2 bg-white text-indigo-500 rounded-md shadow hover:bg-gray-200"
+              className="px-4 py-2 bg-white text-blue-500 rounded-md shadow hover:bg-gray-200"
             >
               Sign In
             </button>
@@ -81,7 +81,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="md:hidden bg-indigo-500 shadow-lg">
+        <div className="md:hidden bg-blue-500 shadow-lg">
           <Link to="/" className="block py-2 px-4 hover:text-gray-300">Home</Link>
           <Link to="/jobs" className="block py-2 px-4 hover:text-gray-300">Jobs</Link>
           <Link to="/about" className="block py-2 px-4 hover:text-gray-300">About</Link>
@@ -90,14 +90,14 @@ const Navbar = () => {
           {isAuthenticated ? (
             <button
               onClick={handleLogout}
-              className="w-full py-2 mt-2 bg-white text-indigo-500 rounded-md shadow hover:bg-gray-200"
+              className="w-full py-2 mt-2 bg-white text-blue-500 rounded-md shadow hover:bg-gray-200"
             >
               Log Out
             </button>
           ) : (
             <button
               onClick={handleSignin}
-              className="w-full py-2 mt-2 bg-white text-indigo-500 rounded-md shadow hover:bg-gray-200"
+              className="w-full py-2 mt-2 bg-white text-blue-500 rounded-md shadow hover:bg-gray-200"
             >
               Sign In
             </button>

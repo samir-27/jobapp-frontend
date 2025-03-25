@@ -11,7 +11,7 @@ const CompanyProfile = () => {
               <li>
                 <Link
                   to="."
-                  className="block text-center py-4 px-6 bg-indigo-100 hover:bg-indigo-500 hover:text-white rounded-lg font-medium"
+                  className="block text-center py-4 px-6 bg-blue-100 hover:bg-blue-500 hover:text-white rounded-lg font-medium"
                 >
                   My Profile
                 </Link>
@@ -19,7 +19,7 @@ const CompanyProfile = () => {
               <li>
                 <Link
                   to="appliedjobs"
-                  className="block text-center py-4 px-6 bg-indigo-100 hover:bg-indigo-500 hover:text-white rounded-lg font-medium"
+                  className="block text-center py-4 px-6 bg-blue-100 hover:bg-blue-500 hover:text-white rounded-lg font-medium"
                 >
                   Applied Jobs
                 </Link>

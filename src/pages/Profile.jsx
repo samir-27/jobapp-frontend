@@ -17,7 +17,7 @@ const Profile = () => {
                 <li key={item.path}>
                   <Link
                     to={item.path}
-                    className={"block text-center py-3 px-5 rounded-lg font-medium transition bg-indigo-100 hover:bg-indigo-500 hover:text-white"}
+                    className={"block text-center py-3 px-5 rounded-lg font-medium transition bg-blue-100 hover:bg-blue-500 hover:text-white"}
                   >
                     {item.name}
                   </Link>

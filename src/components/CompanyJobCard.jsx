@@ -157,7 +157,7 @@ const CompanyJobCard = ({ job }) => {
                 </button>
                 <button
                     onClick={() => setIsEditing(true)}
-                    className="px-5 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-500 transition"
+                    className="px-5 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-500 transition"
                 >
                     Update
                 </button>
@@ -178,7 +178,7 @@ const CompanyJobCard = ({ job }) => {
                             name="title"
                             value={formData.title}
                             onChange={handleChange}
-                            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                         />
                     </div>
                     <div className="mb-4">
@@ -188,7 +188,7 @@ const CompanyJobCard = ({ job }) => {
                             name="description"
                             value={formData.description}
                             onChange={handleChange}
-                            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                         ></textarea>
                     </div>
                     <div className="mb-4">
@@ -199,7 +199,7 @@ const CompanyJobCard = ({ job }) => {
                             name="salary"
                             value={formData.salary}
                             onChange={handleChange}
-                            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                         />
                     </div>
                     <div className="mb-4">
@@ -210,7 +210,7 @@ const CompanyJobCard = ({ job }) => {
                             name="eolw"
                             value={formData.role}
                             onChange={handleChange}
-                            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                         />
                     </div>
                     <div className="mb-4">
@@ -221,7 +221,7 @@ const CompanyJobCard = ({ job }) => {
                             name="companyName"
                             value={formData.companyName}
                             onChange={handleChange}
-                            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                         />
                     </div>
                     <div className="mb-4">
@@ -231,7 +231,7 @@ const CompanyJobCard = ({ job }) => {
                             name="experience"
                             value={formData.experience}
                             onChange={handleChange}
-                            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                         >
                             <option value="">Select...</option>
                             <option value="fresher">Fresher</option>
@@ -248,7 +248,7 @@ const CompanyJobCard = ({ job }) => {
                             name="location"
                             value={formData.location}
                             onChange={handleChange}
-                            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                         >
                             <option value="">Select...</option>
                             <option value="remote">Remote</option>
@@ -263,7 +263,7 @@ const CompanyJobCard = ({ job }) => {
                             name="jobType"
                             value={formData.jobType}
                             onChange={handleChange}
-                            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"
+                            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                         >
                             <option value="">Select...</option>
                             <option value="Full-Time">Full-Time</option>
@@ -273,7 +273,7 @@ const CompanyJobCard = ({ job }) => {
                     </div>
                     <button
                         type="submit"
-                        className="mt-4 px-6 py-2 bg-indigo-500 text-white font-semibold rounded-lg hover:bg-indigo-400"
+                        className="mt-4 px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-400"
                     >
                         Save
                     </button>

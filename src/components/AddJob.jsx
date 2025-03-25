@@ -139,7 +139,7 @@ const FormExample = () => {
   return (
 <div className="p-6 container mx-auto">
   <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg border shadow-md grid grid-cols-1 md:grid-cols-2 gap-6">
-    <h2 className="text-2xl font-bold text-indigo-500 mb-6 md:col-span-2">Add Job</h2>
+    <h2 className="text-2xl font-bold text-blue-500 mb-6 md:col-span-2">Add Job</h2>
 
     <input type="text" id="title" onChange={handleTitleChange} value={title} placeholder="Enter Title" className="border p-2 rounded w-full" />
     <input type="text" id="description" onChange={handleDescriptionChange} value={description} placeholder="Enter Description" className="border p-2 rounded w-full" />
@@ -170,7 +170,7 @@ const FormExample = () => {
       <label className="block font-medium">Skills</label>
       <div className="flex items-center">
         <input type="text" id="skills" value={skillInputValue} onChange={handleSkillInputChange} placeholder="Enter skill" className="border p-2 rounded-l w-full" />
-        <button type="button" onClick={handleAddSkill} className="px-4 py-2 bg-indigo-500 text-white rounded-r">Add</button>
+        <button type="button" onClick={handleAddSkill} className="px-4 py-2 bg-blue-500 text-white rounded-r">Add</button>
       </div>
       <ul className="mt-2">{skills.map((skill, index) => (<li key={index} className="text-sm">{skill}</li>))}</ul>
     </div>
@@ -179,7 +179,7 @@ const FormExample = () => {
       <label className="block font-medium">Requirements</label>
       <div className="flex items-center">
         <input type="text" id="requirements" value={requirementInputValue} onChange={handleRequirementInputChange} placeholder="Enter requirement" className="border p-2 rounded-l w-full" />
-        <button type="button" onClick={handleAddRequirement} className="px-4 py-2 bg-indigo-500 text-white rounded-r">Add</button>
+        <button type="button" onClick={handleAddRequirement} className="px-4 py-2 bg-blue-500 text-white rounded-r">Add</button>
       </div>
       <ul className="mt-2">{requirements.map((req, index) => (<li key={index} className="text-sm">{req}</li>))}</ul>
     </div>
@@ -188,7 +188,7 @@ const FormExample = () => {
       <label className="block font-medium">Responsibilities</label>
       <div className="flex items-center">
         <input type="text" id="responsibilities" value={responsibilityInputValue} onChange={handleResponsibilityInputChange} placeholder="Enter responsibility" className="border p-2 rounded-l w-full" />
-        <button type="button" onClick={handleAddResponsibility} className="px-4 py-2 bg-indigo-500 text-white rounded-r">Add</button>
+        <button type="button" onClick={handleAddResponsibility} className="px-4 py-2 bg-blue-500 text-white rounded-r">Add</button>
       </div>
       <ul className="mt-2">{responsibilities.map((resp, index) => (<li key={index} className="text-sm">{resp}</li>))}</ul>
     </div>
@@ -197,12 +197,12 @@ const FormExample = () => {
       <label className="block font-medium">Nice-to-Have</label>
       <div className="flex items-center">
         <input type="text" id="niceToHave" value={niceToHaveInputValue} onChange={handleNiceToHaveInputChange} placeholder="Enter nice-to-have" className="border p-2 rounded-l w-full" />
-        <button type="button" onClick={handleAddNiceToHave} className="px-4 py-2 bg-indigo-500 text-white rounded-r">Add</button>
+        <button type="button" onClick={handleAddNiceToHave} className="px-4 py-2 bg-blue-500 text-white rounded-r">Add</button>
       </div>
       <ul className="mt-2">{niceToHave.map((niceTo, index) => (<li key={index} className="text-sm">{niceTo}</li>))}</ul>
     </div>
 
-    <button type="submit" className="md:col-span-2 w-full px-4 py-2 bg-indigo-500 text-white font-medium rounded hover:bg-indigo-600">Submit</button>
+    <button type="submit" className="md:col-span-2 w-full px-4 py-2 bg-blue-500 text-white font-medium rounded hover:bg-blue-600">Submit</button>
   </form>
 </div>
 

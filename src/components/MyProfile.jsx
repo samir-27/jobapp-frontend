@@ -177,7 +177,7 @@ const MyProfile = () => {
                 name="fullname"
                 value={formData.fullname}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-300"
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 placeholder="Enter your full name"
               />
             </div>
@@ -188,7 +188,7 @@ const MyProfile = () => {
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-300"
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 placeholder="Enter your phone number"
               />
             </div>
@@ -202,7 +202,7 @@ const MyProfile = () => {
               name="address"
               value={formData.address}
               onChange={handleChange}
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-300"
+              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
               placeholder="Enter your address"
             />
           </div>
@@ -213,7 +213,7 @@ const MyProfile = () => {
               <input
                 type="text"
                 name="pincode"
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-300"
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 placeholder="Enter your pin code"
               />
             </div>
@@ -222,7 +222,7 @@ const MyProfile = () => {
               <input
                 type="text"
                 name="city"
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-300"
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 placeholder="Enter your City"
               />
             </div>
@@ -232,7 +232,7 @@ const MyProfile = () => {
                 type="text"
                 name="state"
 
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-300"
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 placeholder="Enter your State"
               />
             </div>
@@ -246,7 +246,7 @@ const MyProfile = () => {
                 name="education"
                 value={formData.education}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-300"
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
               >
                 <option value="">Select Education</option>
                 <option value="diploma">Diploma</option>
@@ -261,7 +261,7 @@ const MyProfile = () => {
                 name="course"
                 value={formData.course}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-indigo-300"
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 placeholder="Enter your course"
               />
             </div>
@@ -270,7 +270,7 @@ const MyProfile = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-indigo-500 text-white py-2 px-4 rounded-lg hover:bg-indigo-600 transition"
+            className="w-full bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition"
           >
             Update Profile
           </button>

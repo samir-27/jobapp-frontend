@@ -13,7 +13,7 @@ const AboutHero = () => {
         Join us as we continue our journey of innovation and development. Our commitment to progress and growth drives us to create impactful solutions that shape the future of our industry.
       </p>
       <div className="flex justify-center space-x-4">
-        <button className="bg-indigo-500 hover:bg-indigo-600 px-6 py-3 rounded text-lg">View Companies</button>
+        <button className="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded text-lg">View Companies</button>
         <button className="bg-gray-200 text-gray-900 hover:bg-gray-300 px-6 py-3 rounded text-lg">View Job Seekers</button>
       </div>
     </div>

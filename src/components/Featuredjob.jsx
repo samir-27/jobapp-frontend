@@ -17,7 +17,7 @@ const Featuredjob = () => {
   }, []);
 
   return (
-    <div className="bg-white">
+    <div className="">
       <div className="container mx-auto">
         <h1 className="text-black text-4xl font-bold py-10">Featured job</h1>
         <div className="grid grid-cols-2 gap-10">
@@ -26,9 +26,7 @@ const Featuredjob = () => {
           ))}
         </div>
         <div>
-          <button className="relative w-52 px-8 py-4 my-10 text-lg font-bold text-white tracking-wide bg-indigo-500 rounded-full">
-            Find all Jobs
-          </button>
+   
         </div>
       </div>
     </div>

@@ -117,7 +117,7 @@ const AccordionComponent = () => {
             className="w-full p-2 border border-blue-300 rounded-md"
           />
           <button
-            className="bg-indigo-500 text-white px-4 rounded-md"
+            className="bg-blue-500 text-white px-4 rounded-md"
             onClick={handleSkillAdd}
           >
             Add
@@ -127,7 +127,7 @@ const AccordionComponent = () => {
           {skillsArray.map((skill) => (
             <span
               key={skill}
-              className="bg-indigo-200 border-2 px-2 py-1 rounded-full text-sm mr-2"
+              className="bg-blue-200 border-2 px-2 py-1 rounded-full text-sm mr-2"
             >
               {skill}
               <button className="ml-1" onClick={() => handleSkillRemove(skill)}>
@@ -167,7 +167,7 @@ const AccordionComponent = () => {
       ))}
 
       <button
-        className="bg-indigo-500 p-2 rounded-md text-white font-semibold w-full"
+        className="bg-blue-500 p-2 rounded-md text-white font-semibold w-full"
         onClick={handleClearFilters}
       >
         Clear Filters

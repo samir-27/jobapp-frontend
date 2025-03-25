@@ -1,15 +1,16 @@
-const FeaturedJobCard = ({ job }) => {
-  // Log job salary to verify it is correctly passed
-  console.log(job.salary);
+import { useNavigate } from "react-router-dom";
 
-  return (
-    <div className="flex flex-wrap -m-4 ">
+const FeaturedJobCard = ({ job }) => {
+  const navigate = useNavigate();
+  return ( 
+    <div className="flex flex-wrap -m-4 cursor-pointer" onClick={() => navigate(`/job-detail/${job._id}`)}>
       <div className="p-4 w-full">
-        <div className="flex border-2 rounded-lg border-gray-200 border-opacity-50 p-8 sm:flex-row flex-col shadow-md bg-white">
-          <div className="w-16 h-16 sm:mr-8 sm:mb-0 mb-4 inline-flex items-center justify-center rounded-full bg-indigo-100 text-indigo-500 flex-shrink-0">
+        <div className="flex border-2 rounded-lg border-gray-200 border-opacity-50 p-8 sm:flex-row flex-col shadow-md bg-white 
+                        transition-transform duration-300 hover:scale-105 hover:shadow-lg gap-5">
+          <div className="rounded-full overflow-hidden h-20 w-20 flex items-center justify-center bg-gray-200">
             <img
-              className="h-20 w-20 object-contain"
-              src="https://cdn.prod.website-files.com/66b757e42412d2f5e0906c5f/66bf2b9a2ff5d8f19427f6db_job-07.svg"
+              className="h-20 w-20 object-cover "
+              src={job.company.logo}
               alt="Company Logo"
             />
           </div>
@@ -43,7 +44,19 @@ const FeaturedJobCard = ({ job }) => {
                 <span>{job.location}</span>
               </div>
             </div>
-            <p className="leading-relaxed text-base">{job.description}</p>
+
+            {/* Skills Section */}
+            <div className="flex flex-wrap gap-2 mt-4">
+              {job.skills.map((skill, index) => (
+                <span 
+                  key={index} 
+                  className="px-4 py-2 bg-blue-200 text-blue-700 text-sm font-semibold rounded-full  bg-opacity-50"
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+
           </div>
         </div>
       </div>
