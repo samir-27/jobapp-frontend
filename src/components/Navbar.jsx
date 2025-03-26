@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaCircleUser } from "react-icons/fa6";
+import { FaCircleUser, FaHeart } from "react-icons/fa6";
+import { useFavorites } from "./FavoritesContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const navigate = useNavigate();
+  const { favorites } = useFavorites();
 
   useEffect(() => {
     const token = localStorage.getItem("authToken");
@@ -21,7 +23,7 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("authToken");
     setIsAuthenticated(false);
-    navigate("/");
+    navigate("/signup");
   };
 
   return (
@@ -36,7 +38,11 @@ const Navbar = () => {
           <Link to="/jobs" className="hover:text-gray-300 font-medium">Jobs</Link>
           <Link to="/about" className="hover:text-gray-300 font-medium">About</Link>
           <Link to="/contact" className="hover:text-gray-300 font-medium">Contact</Link>
-
+          <Link to="/favorites" className="hover:text-gray-300 font-medium">
+          <div className="flex items-center gap-1">  
+          <FaHeart size={20} /> ({favorites.length})
+          </div>
+        </Link>
           {isAuthenticated ? (
             <button
               onClick={handleLogout}
@@ -86,7 +92,9 @@ const Navbar = () => {
           <Link to="/jobs" className="block py-2 px-4 hover:text-gray-300">Jobs</Link>
           <Link to="/about" className="block py-2 px-4 hover:text-gray-300">About</Link>
           <Link to="/contact" className="block py-2 px-4 hover:text-gray-300">Contact</Link>
-
+          <Link to="/favorites" className="hover:underline">
+          Favorite Jobs ({favorites.length})
+        </Link>
           {isAuthenticated ? (
             <button
               onClick={handleLogout}

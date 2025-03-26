@@ -5,7 +5,7 @@ const FeaturedJobCard = ({ job }) => {
   return ( 
     <div className="flex flex-wrap -m-4 cursor-pointer" onClick={() => navigate(`/job-detail/${job._id}`)}>
       <div className="p-4 w-full">
-        <div className="flex border-2 rounded-lg border-gray-200 border-opacity-50 p-8 sm:flex-row flex-col shadow-md bg-white 
+        <div className="flex border-2 rounded-lg border-gray-200 border-opacity-50 p-6 sm:flex-row flex-col shadow-md bg-white 
                         transition-transform duration-300 hover:scale-105 hover:shadow-lg gap-5">
           <div className="rounded-full overflow-hidden h-20 w-20 flex items-center justify-center bg-gray-200">
             <img

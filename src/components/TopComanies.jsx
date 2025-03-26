@@ -29,7 +29,7 @@ const TopCompanies = () => {
     if (error) return <p className="text-red-500">Error: {error}</p>;
 
     return (
-        <div className='py-12'>
+        <div className='py-12 bg-white'>
             <div className=' mx-auto container'>
 
                 <h1 className='text-4xl font-bold pb-10'>Top Companies</h1>

@@ -19,6 +19,7 @@ import AppliedJobs from "./components/AppliedJobs";
 import CompanyNavbar from "./components/CompanyNavbar";
 import CompanyProfile from "./pages/CompnyProfile";
 import CompanyMyProfile from "./components/CompanyMyProfile";
+import Favorites from "./components/Favorites";
 
 const App = () => {
   const location = useLocation();
@@ -38,6 +39,7 @@ const App = () => {
           <Route path="/contact" element={<Contact />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/favorites" element={<Favorites />} />
           <Route path="/profile" element={<Profile />} >
             <Route index element={<MyProfile />} />
              <Route path="appliedjobs" element={<AppliedJobs />} />

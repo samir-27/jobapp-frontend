@@ -17,9 +17,9 @@ const Featuredjob = () => {
   }, []);
 
   return (
-    <div className="">
+    <div className="py-10">
       <div className="container mx-auto">
-        <h1 className="text-black text-4xl font-bold py-10">Featured job</h1>
+        <h1 className="text-black text-4xl font-bold pb-10">Featured job</h1>
         <div className="grid grid-cols-2 gap-10">
           {jobs.slice(0, 6).map((job) => (
             <FeaturedJobCard key={job.id} job={job} />

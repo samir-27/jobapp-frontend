@@ -101,14 +101,16 @@ const JobDetailPage = () => {
   }
   console.log(job)
   return (
-    <div className="py-10 container mx-auto">
+   <div className="bg-blue-50 py-10 min-h-screen">
+
+    <div className="p-10 rounded bg-white container mx-auto">
       <div className="flex pb-4">
         <div>
           <img
             className="rounded-full w-20 h-20 object-cover"
             src={job.company.logo}
             alt=""
-          />
+            />
         </div>
         <div className="my-auto px-2">
           <h1 className="text-3xl font-bold"> {job.company.name}</h1>
@@ -137,7 +139,7 @@ const JobDetailPage = () => {
           <button
             onClick={handleApplyNow}
             className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          >
+            >
             Apply Now
           </button>
         </div>
@@ -160,20 +162,20 @@ const JobDetailPage = () => {
                 value={formData.phone}
                 onChange={handleChange}
                 className="w-full p-2 mb-3 border rounded"
-              />
+                />
               <textarea
                 name="address"
                 placeholder="Address"
                 value={formData.address}
                 onChange={handleChange}
                 className="w-full p-2 mb-3 border rounded"
-              ></textarea>
+                ></textarea>
               <select
                 name="education"
                 value={formData.education}
                 onChange={handleChange}
                 className="w-full p-2 mb-3 border rounded"
-              >
+                >
                 <option value="diploma">Diploma</option>
                 <option value="graduation">Graduation</option>
                 <option value="post-graduation">Post-Graduation</option>
@@ -185,19 +187,19 @@ const JobDetailPage = () => {
                 value={formData.course}
                 onChange={handleChange}
                 className="w-full p-2 mb-3 border rounded"
-              />
+                />
               <input
                 type="file"
                
                 onChange={(e) => setFormData({ ...formData, resume: e.target.files[0] })}
                 className="w-full p-2 mb-3 border rounded"
-              />
+                />
 
               <div className="flex justify-between">
                 <button
                   onClick={handleCloseModal}
                   className="px-4 py-2 bg-gray-300 rounded"
-                >
+                  >
                   Cancel
                 </button>
                 <button
@@ -224,6 +226,7 @@ const JobDetailPage = () => {
         </ul>
       </div>
     </div>
+        </div>
   );
 };
 
