@@ -6,7 +6,7 @@ import { useFavorites } from "./FavoritesContext";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const navigate = useNavigate();
+
   const { favorites } = useFavorites();
 
   useEffect(() => {
@@ -16,15 +16,6 @@ const Navbar = () => {
     }
   }, []);
 
-  const handleSignin = () => {
-    navigate("/signin");
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    setIsAuthenticated(false);
-    navigate("/signup");
-  };
 
   return (
     <nav className="bg-blue-500 text-white z-50 top-0 sticky ">
@@ -43,21 +34,7 @@ const Navbar = () => {
           <FaHeart size={20} /> ({favorites.length})
           </div>
         </Link>
-          {isAuthenticated ? (
-            <button
-              onClick={handleLogout}
-              className="px-4 py-2 bg-white text-blue-500 rounded-md shadow hover:bg-gray-200"
-            >
-              Log Out
-            </button>
-          ) : (
-            <button
-              onClick={handleSignin}
-              className="px-4 py-2 bg-white text-blue-500 rounded-md shadow hover:bg-gray-200"
-            >
-              Sign In
-            </button>
-          )}
+
           <Link to="/profile" className="hover:text-gray-300">
             <FaCircleUser size={30} />
           </Link>

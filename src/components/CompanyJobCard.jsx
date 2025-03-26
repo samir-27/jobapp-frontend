@@ -91,46 +91,6 @@ const CompanyJobCard = ({ job }) => {
         }));
     };
 
-    const handleAddSkill = () => {
-        if (skillInputValue.trim() !== "") {
-            setFormData((prev) => ({
-                ...prev,
-                skills: [...prev.skills, skillInputValue.trim()],
-            }));
-            setSkillInputValue("");
-        }
-    };
-
-    const handleAddRequirement = () => {
-        if (requirementInputValue.trim() !== "") {
-            setFormData((prev) => ({
-                ...prev,
-                requirements: [...prev.requirements, requirementInputValue.trim()],
-            }));
-            setRequirementInputValue("");
-        }
-    };
-
-    const handleAddResponsibility = () => {
-        if (responsibilityInputValue.trim() !== "") {
-            setFormData((prev) => ({
-                ...prev,
-                responsibilities: [...prev.responsibilities, responsibilityInputValue.trim()],
-            }));
-            setResponsibilityInputValue("");
-        }
-    };
-
-    const handleAddNiceToHave = () => {
-        if (niceToHaveInputValue.trim() !== "") {
-            setFormData((prev) => ({
-                ...prev,
-                niceToHave: [...prev.niceToHave, niceToHaveInputValue.trim()],
-            }));
-            setNiceToHaveInputValue("");
-        }
-    };
-
     return (
         <div className="bg-white border border-gray-300 rounded-xl shadow-lg p-6 transition-all hover:shadow-xl">
             <h3 className="text-2xl font-semibold text-gray-900">{job.title}</h3>
@@ -151,19 +111,19 @@ const CompanyJobCard = ({ job }) => {
             <div className="mt-5 flex flex-wrap gap-3">
                 <button
                     onClick={handleDelete}
-                    className="px-5 py-2 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-500 transition"
+                    className="px-5 py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-500 transition"
                 >
                     Delete
                 </button>
                 <button
                     onClick={() => setIsEditing(true)}
-                    className="px-5 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-500 transition"
+                    className="px-5 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-500 transition"
                 >
                     Update
                 </button>
                 <button
                     onClick={fetchApplications}
-                    className="px-5 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-500 transition"
+                    className="px-5 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-500 transition"
                 >
                     View Applications
                 </button>

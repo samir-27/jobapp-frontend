@@ -4,23 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const CompanyNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    setIsAuthenticated(!!token); // Convert token to boolean
-  }, []);
-
-  const handleSignin = () => {
-    navigate("/signin");
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("authToken");
-    setIsAuthenticated(false);
-    navigate("/");
-  };
 
   return (
     <nav className="bg-blue-500 text-white z-50 top-0 sticky">
@@ -34,21 +17,6 @@ const CompanyNavbar = () => {
           <Link to="/company/addjob" className="hover:text-gray-300 font-medium">Create Job</Link>
           <Link to="/company/postedjobs" className="hover:text-gray-300 font-medium">Posted Jobs</Link>
 
-          {isAuthenticated ? (
-            <button
-              onClick={handleLogout}
-              className="px-4 py-2 bg-white text-blue-500 rounded-md shadow hover:bg-gray-200"
-            >
-              Log Out
-            </button>
-          ) : (
-            <button
-              onClick={handleSignin}
-              className="px-4 py-2 bg-white text-blue-500 rounded-md shadow hover:bg-gray-200"
-            >
-              Sign In
-            </button>
-          )}
           <Link to="/company/profile" className="hover:text-gray-300">
             <FaCircleUser size={30} />
           </Link>

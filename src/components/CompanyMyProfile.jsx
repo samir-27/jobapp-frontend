@@ -36,7 +36,7 @@ const CompanyMyProfile = () => {
           address: companyData.address || '',
           city: companyData.city || '',
           companySize: companyData.companySize || '',
-          image: companyData.profileImg || '',
+          image: companyData.logo || '',
         });
       } catch (error) {
         console.error('Error:', error);
@@ -111,7 +111,7 @@ const CompanyMyProfile = () => {
 
   return (
     <div className="mx-auto mt-5">
-      <div className="bg-white shadow-md rounded-lg p-6">
+      <div className="rounded-lg ">
         <form onSubmit={handleSubmit} className="space-y-4">
         <div>
             {selectedImage ? (
