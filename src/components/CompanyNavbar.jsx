@@ -13,7 +13,6 @@ const CompanyNavbar = () => {
         </div>
 
         <div className="hidden md:flex space-x-8 items-center">
-          <Link to="/company/home" className="hover:text-gray-300 font-medium">Home</Link>
           <Link to="/company/addjob" className="hover:text-gray-300 font-medium">Create Job</Link>
           <Link to="/company/postedjobs" className="hover:text-gray-300 font-medium">Posted Jobs</Link>
 

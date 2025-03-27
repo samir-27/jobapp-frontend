@@ -4,21 +4,18 @@ import { toast } from 'react-toastify';
 import Bgimg from "../assets/loginpng.png";
 import { signup, Placeholder } from "../utils/common.js";
 
-const Signup = () => {
+const CompanySignup = () => {
     const navigate = useNavigate();
     const [step, setStep] = useState(1);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         password: '',
-        fullname: '',
-        phone: '',
-        education: '',
-        course: '',
+        slogan: '',
+        description: '',
         address: '',
         city: '',
-        pincode: '',
-        state: ''
+        companySize: '',
     });
     const [errors, setErrors] = useState({});
 
@@ -60,7 +57,7 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:3000/users/signup', {
+            const response = await fetch('http://localhost:3000/companies/signup', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
@@ -109,45 +106,32 @@ const Signup = () => {
                         {step === 2 && (
                             <>
                                 <div className="mb-6">
-                                    <label className="block font-medium">Full Name</label>
-                                    <input type="text" id="fullname" value={formData.fullname} onChange={handleInputChange} required className="w-full px-4 py-2 border rounded-lg focus:border-blue-500 focus:outline-none" />
+                                    <label className="block font-medium">Slogan</label>
+                                    <input type="text" id="slogan" value={formData.slogan} onChange={handleInputChange} required className="w-full px-4 py-2 border rounded-lg focus:border-blue-500 focus:outline-none" />
                                 </div>
                                 <div className="mb-6">
-                                    <label className="block font-medium">Phone</label>
-                                    <input type="text" id="phone" value={formData.phone} onChange={handleInputChange} required className="w-full px-4 py-2 border rounded-lg focus:border-blue-500 focus:outline-none" />
+                                    <label className="block font-medium">Description</label>
+                                    <input type="text" id="description" value={formData.description} onChange={handleInputChange} required className="w-full px-4 py-2 border rounded-lg focus:border-blue-500 focus:outline-none" />
                                 </div>
                                 <div className="mb-6">
-                                    <label className="block font-medium">Education</label>
-                                    <input type="text" id="education" value={formData.education} onChange={handleInputChange} required className="w-full px-4 py-2 border rounded-lg focus:border-blue-500 focus:outline-none" />
+                                    <label className="block font-medium">Company Size</label>
+                                    <input type="text" id="companySize" value={formData.companySize} onChange={handleInputChange} required className="w-full px-4 py-2 border rounded-lg focus:border-blue-500 focus:outline-none" />
                                 </div>
-                                <div className="mb-6">
-                                    <label className="block font-medium">Course</label>
-                                    <input type="text" id="course" value={formData.course} onChange={handleInputChange} required className="w-full px-4 py-2 border rounded-lg focus:border-blue-500 focus:outline-none" />
-                                </div>
-                            </>
-                        )}
-
-                        {step ===3 && (
-                            <>
                                 <div className="mb-6">
                                     <label className="block font-medium">Address</label>
                                     <input type="text" id="address" value={formData.address} onChange={handleInputChange} required className="w-full px-4 py-2 border rounded-lg focus:border-blue-500 focus:outline-none" />
                                 </div>
                                 <div className="mb-6">
-                                    <label className="block font-medium">city</label>
+                                    <label className="block font-medium">City</label>
                                     <input type="text" id="city" value={formData.city} onChange={handleInputChange} required className="w-full px-4 py-2 border rounded-lg focus:border-blue-500 focus:outline-none" />
-                                </div>
-                                <div className="mb-6">
-                                    <label className="block font-medium">State</label>
-                                    <input type="text" id="state" value={formData.state} onChange={handleInputChange} required className="w-full px-4 py-2 border rounded-lg focus:border-blue-500 focus:outline-none" />
                                 </div>
                             </>
                         )}
 
                         <div className="flex justify-between mt-6">
                             {step > 1 && <button type="button" onClick={handleBack} className="px-6 py-2 bg-gray-300 rounded-lg">Back</button>}
-                            {step < 3 && <button type="button" onClick={handleNext} className="px-6 py-2 bg-blue-500 text-white rounded-lg">Next</button>}
-                            {step === 3 && <button type="submit" onClick={handleSubmit} className="px-6 py-2 bg-green-500 text-white rounded-lg">Submit</button>}
+                            {step < 2 && <button type="button" onClick={handleNext} className="px-6 py-2 bg-blue-500 text-white rounded-lg">Next</button>}
+                            {step === 2 && <button type="submit" onClick={handleSubmit} className="px-6 py-2 bg-green-500 text-white rounded-lg">Submit</button>}
                         </div>
                     </form>
                 </div>
@@ -156,4 +140,4 @@ const Signup = () => {
     );
 };
 
-export default Signup;
+export default CompanySignup;

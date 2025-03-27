@@ -19,6 +19,7 @@ import CompanyNavbar from "./components/CompanyNavbar";
 import CompanyProfile from "./pages/CompnyProfile";
 import CompanyMyProfile from "./components/CompanyMyProfile";
 import Favorites from "./components/Favorites";
+import CompanySignup from "./pages/CompanySignup";
 
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("authToken");
@@ -60,6 +61,8 @@ const App = () => {
           </Route>
 
           {/* Protected Routes for Company Dashboard */}
+          <Route path="/company/signup" element={<CompanySignup />} />
+          {/* <Route path="/company/signin" element={<CompanySignin />} /> */}
           <Route path="/company/addjob" element={<ProtectedRoute><AddJob /></ProtectedRoute>} />
           <Route path="/company/postedjobs" element={<ProtectedRoute><PostedJobs /></ProtectedRoute>} />
           <Route path="/company/profile" element={<ProtectedRoute><CompanyProfile /></ProtectedRoute>}>
