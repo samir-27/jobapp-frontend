@@ -37,40 +37,45 @@ const App = () => {
 
   return (
     <>
-      <ToastContainer position="top-center" />
-      {/* Show Navbar only if the user is authenticated and not on sign-in or sign-up pages */}
-      {isAuthenticated && !["/signin", "/signup"].includes(location.pathname) && !location.pathname.startsWith("/company") && <Navbar />}
-      {isAuthenticated && location.pathname.startsWith("/company") && <CompanyNavbar />}
+  <ToastContainer position="top-center" />
+  {/* Show Navbar only if the user is authenticated and not on sign-in or sign-up pages */}
+  {isAuthenticated &&
+    !["/signin", "/signup", "/company/signup"].includes(location.pathname) &&
+    !location.pathname.startsWith("/company") && <Navbar />}
+  
+  {isAuthenticated &&
+    location.pathname.startsWith("/company") &&
+    location.pathname !== "/company/signup" && <CompanyNavbar />}
 
-      <div>
-        <Routes>
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/signup" element={<Signup />} />
+  <div>
+    <Routes>
+      <Route path="/signin" element={<Signin />} />
+      <Route path="/signup" element={<Signup />} />
 
-          {/* Protected Routes (User must be authenticated) */}
-          <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-          <Route path="/jobs" element={<ProtectedRoute><Jobs /></ProtectedRoute>} />
-          <Route path="/job-detail/:id" element={<ProtectedRoute><JobDetail /></ProtectedRoute>} />
-          <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
-          <Route path="/contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
-          <Route path="/favorites" element={<ProtectedRoute><Favorites /></ProtectedRoute>} />
-          
-          <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>}>
-            <Route index element={<MyProfile />} />
-            <Route path="appliedjobs" element={<AppliedJobs />} />
-          </Route>
+      {/* Protected Routes (User must be authenticated) */}
+      <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+      <Route path="/jobs" element={<ProtectedRoute><Jobs /></ProtectedRoute>} />
+      <Route path="/job-detail/:id" element={<ProtectedRoute><JobDetail /></ProtectedRoute>} />
+      <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
+      <Route path="/contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
+      <Route path="/favorites" element={<ProtectedRoute><Favorites /></ProtectedRoute>} />
+      
+      <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>}>
+        <Route index element={<MyProfile />} />
+        <Route path="appliedjobs" element={<AppliedJobs />} />
+      </Route>
 
-          {/* Protected Routes for Company Dashboard */}
-          <Route path="/company/signup" element={<CompanySignup />} />
-          {/* <Route path="/company/signin" element={<CompanySignin />} /> */}
-          <Route path="/company/addjob" element={<ProtectedRoute><AddJob /></ProtectedRoute>} />
-          <Route path="/company/postedjobs" element={<ProtectedRoute><PostedJobs /></ProtectedRoute>} />
-          <Route path="/company/profile" element={<ProtectedRoute><CompanyProfile /></ProtectedRoute>}>
-            <Route index element={<CompanyMyProfile />} />
-          </Route>
-        </Routes>
-      </div>
-    </>
+      {/* Protected Routes for Company Dashboard */}
+      <Route path="/company/signup" element={<CompanySignup />} />
+      <Route path="/company/addjob" element={<ProtectedRoute><AddJob /></ProtectedRoute>} />
+      <Route path="/company/postedjobs" element={<ProtectedRoute><PostedJobs /></ProtectedRoute>} />
+      <Route path="/company/profile" element={<ProtectedRoute><CompanyProfile /></ProtectedRoute>}>
+        <Route index element={<CompanyMyProfile />} />
+      </Route>
+    </Routes>
+  </div>
+</>
+
   );
 };
 
