@@ -20,6 +20,8 @@ import CompanyProfile from "./pages/CompnyProfile";
 import CompanyMyProfile from "./components/CompanyMyProfile";
 import Favorites from "./components/Favorites";
 import CompanySignup from "./pages/CompanySignup";
+import Companies from "./pages/Companies";
+import CompanyDetail from "./pages/CompanyDetail";
 
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("authToken");
@@ -58,6 +60,8 @@ const App = () => {
       <Route path="/job-detail/:id" element={<ProtectedRoute><JobDetail /></ProtectedRoute>} />
       <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
       <Route path="/contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
+      <Route path="/companies" element={<ProtectedRoute><Companies /></ProtectedRoute>} />
+      <Route path="/comp-detail/:id" element={<ProtectedRoute><CompanyDetail /></ProtectedRoute>} />
       <Route path="/favorites" element={<ProtectedRoute><Favorites /></ProtectedRoute>} />
       
       <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>}>

@@ -34,6 +34,7 @@ const Navbar = () => {
           <FaHeart size={20} /> ({favorites.length})
           </div>
         </Link>
+          <Link to="/companies" className="hover:text-gray-300 font-medium">Companies</Link>
 
           <Link to="/profile" className="hover:text-gray-300">
             <FaCircleUser size={30} />
