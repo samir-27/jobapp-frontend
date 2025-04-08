@@ -15,7 +15,7 @@ const AccordionComponent = () => {
       options: [
         { value: 'remote', label: 'Remote' },
         { value: 'hybrid', label: 'Hybrid' },
-        { value: 'location', label: 'Location' },
+        { value: 'on-site', label: 'On-Site' },
       ],
     },
     {
