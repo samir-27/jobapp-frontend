@@ -46,7 +46,7 @@ const CompanyDetail = () => {
         <div className='border p-5 w-2/3'>
 
           <div className='flex items-center gap-10 mb-6'>
-            <img src={companyDetails.logo} alt="Company Logo" className='w-32 h-32 rounded-full shadow-lg border-4 border-blue-300' />
+            <img src={companyDetails.logo} alt="Company Logo" className='w-32 h-32' />
             <div>
               <h2 className='text-3xl font-bold text-blue-600 mb-2'>{companyDetails.name}</h2>
               <p className='text-lg italic text-gray-700 mb-2'>{companyDetails.slogan}</p>

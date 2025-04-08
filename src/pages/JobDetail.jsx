@@ -107,7 +107,7 @@ const JobDetailPage = () => {
       <div className="flex pb-4">
         <div>
           <img
-            className="rounded-full w-20 h-20 object-cover"
+            className="w-20 h-20 object-cover"
             src={job.company.logo}
             alt=""
             />
@@ -222,6 +222,37 @@ const JobDetailPage = () => {
         <ul className="list-disc pl-5">
           {job.skills.map((skill, index) => (
             <li key={index}>{skill}</li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h1 className="text-xl font-semibold my-4 text-blue-500 uppercase">
+          Responsibilities:
+        </h1>
+        <ul className="list-disc pl-5">
+          {job.responsibilities.map((Responsibility, index) => (
+            <li key={index}>{Responsibility}</li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h1 className="text-xl font-semibold my-4 text-blue-500 uppercase">
+          Requirements :
+        </h1>
+        <ul className="list-disc pl-5">
+          {job.requirements.map((niceToHave, index) => (
+            <li key={index}>{niceToHave}</li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <h1 className="text-xl font-semibold my-4 text-blue-500 uppercase">
+          Nice To Have:
+        </h1>
+        <ul className="list-disc pl-5">
+          {job.niceToHave.map((niceToHave, index) => (
+            <li key={index}>{niceToHave}</li>
           ))}
         </ul>
       </div>

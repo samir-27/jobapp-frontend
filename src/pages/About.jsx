@@ -68,9 +68,7 @@ const About = () => {
     <>
     <div className="bg-blue-50">
 
-      <AboutHero />
-      <Statistics />
-   
+      <AboutHero /> 
       <About2 />
     </div>
     </>

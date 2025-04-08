@@ -23,6 +23,8 @@ export default function Reviews() {
             .catch((err) => console.error("Error fetching reviews:", err));
     }, []);
 
+    console.log(reviews)
+
     // Handle Star Click
     const handleStarClick = (rating) => {
         setFormData({ ...formData, stars: rating });
@@ -59,7 +61,7 @@ export default function Reviews() {
     };
 
     return (
-        <div className="py-10 shadow-md rounded-lg bg-white">
+        <div className="py-10 rounded-lg bg-white">
             {console.log(reviews)}
             {/* Display Reviews */}
             <section className="text-gray-600 body-font">
@@ -78,7 +80,7 @@ export default function Reviews() {
                     <div className="flex flex-wrap -m-4">
                         {reviews.map((review) => (
                             <div key={review._id} className="p-4 md:w-1/2 w-full">
-                                <div className="h-full border-2 border-gray-400 shadow-lg p-8 rounded">
+                                <div className="h-full border border-gray-400 shadow-lg p-8 rounded">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         fill="currentColor"
@@ -104,14 +106,13 @@ export default function Reviews() {
                                     <a className="inline-flex items-center">
                                         <img
                                             alt="testimonial"
-                                            src="default-profile.jpg" // You can replace this with dynamic user profile image
+                                            src={ review.userId.profileImg } // You can replace this with dynamic user profile image
                                             className="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center"
                                         />
-                                        <span className="flex-grow flex flex-col pl-4">
+                                        <span className="pl-4">
                                             <span className="title-font font-medium text-gray-900">
-                                                {review.userId && review.userId.name ? review.userId.name : "Unknown User"}
+                                                {review.userId.name}
                                             </span>
-                                            <span className="text-gray-500 text-sm">Reviewer</span>
                                         </span>
                                     </a>
                                 </div>

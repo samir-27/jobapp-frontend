@@ -37,6 +37,9 @@ const MyProfile = () => {
           fullname: userData.fullname || '',
           phone: userData.phone || '',
           address: userData.address || '',
+          city: userData.city || '',
+          pincode: userData.pincode || '',
+          state: userData.state || '',
           education: userData.education || '',
           course: userData.course || '',
           image: userData.profileImg || '',
@@ -213,6 +216,8 @@ const MyProfile = () => {
               <input
                 type="text"
                 name="pincode"
+                value={formData.pincode}
+                onChange={handleChange}
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 placeholder="Enter your pin code"
               />
@@ -223,6 +228,8 @@ const MyProfile = () => {
                 type="text"
                 name="city"
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                value={formData.city}
+                onChange={handleChange}
                 placeholder="Enter your City"
               />
             </div>
@@ -231,7 +238,8 @@ const MyProfile = () => {
               <input
                 type="text"
                 name="state"
-
+              value={formData.state}
+                onChange={handleChange}
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 placeholder="Enter your State"
               />

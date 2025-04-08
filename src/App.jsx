@@ -22,6 +22,7 @@ import Favorites from "./components/Favorites";
 import CompanySignup from "./pages/CompanySignup";
 import Companies from "./pages/Companies";
 import CompanyDetail from "./pages/CompanyDetail";
+import Footer from "./components/Footer";
 
 const ProtectedRoute = ({ children }) => {
   const token = localStorage.getItem("authToken");
@@ -77,6 +78,11 @@ const App = () => {
         <Route index element={<CompanyMyProfile />} />
       </Route>
     </Routes>
+    {
+          !["/signin", "/signup", "/company/signup"].includes(location.pathname) &&
+          !location.pathname.startsWith("/company") && <Footer />
+    }
+    
   </div>
 </>
 

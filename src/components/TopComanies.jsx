@@ -6,6 +6,7 @@ const TopCompanies = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+
     useEffect(() => {
         const fetchCompanies = async () => {
             try {
@@ -29,11 +30,11 @@ const TopCompanies = () => {
     if (error) return <p className="text-red-500">Error: {error}</p>;
 
     return (
-        <div className='py-12 bg-white'>
+        <div className='py-12 cursor-pointer bg-white'>
             <div className=' mx-auto container'>
 
-                <h1 className='text-4xl font-bold pb-10'>Top Companies</h1>
-                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4   gap-6 ">
+                <h1 className='text-4xl font-bold pb-10 mx-4 md:mx-0'>Top Companies</h1>
+                <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-4   gap-4 ">
                     {companies.map((company) => (
                         <TopCompanyCard key={company.id} company={company} />
                     ))}

@@ -101,7 +101,7 @@ const Signup = () => {
                                 <div className="mb-6">
                                     <label className="block font-medium">Password</label>
                                     <input type="password" id="password" value={formData.password} onChange={handleInputChange} required className="w-full px-4 py-2 border rounded-lg focus:border-blue-500 focus:outline-none" />
-                                    {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
+                              
                                 </div>
                             </>
                         )}
@@ -117,9 +117,22 @@ const Signup = () => {
                                     <input type="text" id="phone" value={formData.phone} onChange={handleInputChange} required className="w-full px-4 py-2 border rounded-lg focus:border-blue-500 focus:outline-none" />
                                 </div>
                                 <div className="mb-6">
-                                    <label className="block font-medium">Education</label>
-                                    <input type="text" id="education" value={formData.education} onChange={handleInputChange} required className="w-full px-4 py-2 border rounded-lg focus:border-blue-500 focus:outline-none" />
+                                    <label className="block font-medium" htmlFor="education">Education</label>
+                                    <select
+                                        id="education"
+                                        value={formData.education}
+                                        onChange={handleInputChange}
+                                        required
+                                        className="w-full px-4 py-2 border rounded-lg focus:border-blue-500 focus:outline-none"
+                                        name="education"
+                                    >
+                                        <option value="" disabled>Select education level</option>
+                                        <option value="diploma">Diploma</option>
+                                        <option value="graduation">Graduation</option>
+                                        <option value="post-graduation">Post-Graduation</option>
+                                    </select>
                                 </div>
+
                                 <div className="mb-6">
                                     <label className="block font-medium">Course</label>
                                     <input type="text" id="course" value={formData.course} onChange={handleInputChange} required className="w-full px-4 py-2 border rounded-lg focus:border-blue-500 focus:outline-none" />
@@ -127,11 +140,15 @@ const Signup = () => {
                             </>
                         )}
 
-                        {step ===3 && (
+                        {step === 3 && (
                             <>
                                 <div className="mb-6">
                                     <label className="block font-medium">Address</label>
                                     <input type="text" id="address" value={formData.address} onChange={handleInputChange} required className="w-full px-4 py-2 border rounded-lg focus:border-blue-500 focus:outline-none" />
+                                </div>
+                                <div className="mb-6">
+                                    <label className="block font-medium">Pincode</label>
+                                    <input type="text" id="pincode" value={formData.pincode} onChange={handleInputChange} required className="w-full px-4 py-2 border rounded-lg focus:border-blue-500 focus:outline-none" />
                                 </div>
                                 <div className="mb-6">
                                     <label className="block font-medium">city</label>

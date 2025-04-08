@@ -9,9 +9,9 @@ const CompanyCard = ({ company }) => {
         navigate(`/comp-detail/${company._id}`);   
     }
   return (
-<div className="rounded-3xl p-6 shadow-lg bg-white cursor-pointer" onClick={handleClick}>
+<div className="p-6 shadow-lg bg-white cursor-pointer" onClick={handleClick}>
   <div className="flex items-center mb-4">
-    <img src={company.logo} alt={company.name} className="w-24 h-24 rounded-full object-cover shadow-md" />
+    <img src={company.logo} alt={company.name} className="w-24 h-24  object-cover" />
     <div className="ml-4">
       <h2 className="text-2xl  text-blue-500 font-bold">{company.name}</h2>
       <p className="text-sm text-gray-700 italic">{company.slogan}</p>

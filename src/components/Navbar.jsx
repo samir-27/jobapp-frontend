@@ -28,7 +28,7 @@ const Navbar = () => {
           <Link to="/" className="hover:text-gray-300 font-medium">Home</Link>
           <Link to="/jobs" className="hover:text-gray-300 font-medium">Jobs</Link>
           <Link to="/about" className="hover:text-gray-300 font-medium">About</Link>
-          <Link to="/contact" className="hover:text-gray-300 font-medium">Contact</Link>
+          {/* <Link to="/contact" className="hover:text-gray-300 font-medium">Contact</Link> */}
           <Link to="/favorites" className="hover:text-gray-300 font-medium">
           <div className="flex items-center gap-1">  
           <FaHeart size={20} /> ({favorites.length})
@@ -69,25 +69,12 @@ const Navbar = () => {
           <Link to="/" className="block py-2 px-4 hover:text-gray-300">Home</Link>
           <Link to="/jobs" className="block py-2 px-4 hover:text-gray-300">Jobs</Link>
           <Link to="/about" className="block py-2 px-4 hover:text-gray-300">About</Link>
-          <Link to="/contact" className="block py-2 px-4 hover:text-gray-300">Contact</Link>
-          <Link to="/favorites" className="hover:underline">
+          <Link to="/companies" className="block py-2 px-4 hover:text-gray-300">Companies</Link>
+          <Link to="/profile" className="block py-2 px-4 hover:text-gray-300">Profile</Link>
+          <Link to="/favorites" className="block py-2 px-4 hover:text-gray-300 hover:underline">
           Favorite Jobs ({favorites.length})
         </Link>
-          {isAuthenticated ? (
-            <button
-              onClick={handleLogout}
-              className="w-full py-2 mt-2 bg-white text-blue-500 rounded-md shadow hover:bg-gray-200"
-            >
-              Log Out
-            </button>
-          ) : (
-            <button
-              onClick={handleSignin}
-              className="w-full py-2 mt-2 bg-white text-blue-500 rounded-md shadow hover:bg-gray-200"
-            >
-              Sign In
-            </button>
-          )}
+       
         </div>
       )}
     </nav>

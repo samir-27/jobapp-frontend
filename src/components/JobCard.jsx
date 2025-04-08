@@ -22,7 +22,7 @@ const JobCard = ({ job }) => {
   return (
     <div className="bg-white border shadow-md border-gray-200 rounded p-6 transition-all transform hover:scale-[1.03]">
       <div className="flex items-center gap-4 mb-4">
-        <img src={job.company.logo} alt="Company Logo" className="w-14 h-14 rounded-full shadow-md" />
+        <img src={job.company.logo} alt="Company Logo" className="w-14 h-14 " />
         <div>
           <h3 className="text-2xl font-semibold text-gray-800">{job.title}</h3>
           <p className="text-gray-600 text-sm">{job.company.name}</p>

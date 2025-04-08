@@ -40,7 +40,7 @@ const Signin = () => {
         localStorage.setItem("role", role);
 
         toast.success("Login successful!");
-        navigate(role === "user" ? "/" : "/company");
+        navigate(role === "user" ? "/" : "/company/addjob");
       } else {
         toast.error(data.message || "Login failed. Please try again.");
       }

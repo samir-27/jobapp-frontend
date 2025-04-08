@@ -5,8 +5,10 @@ const Favorites = () => {
   const { favorites } = useFavorites();
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Favorite Jobs</h1>
+    <div className="bg-blue-50 min-h-screen" >
+
+    <div className="container mx-auto py-10">
+      <h1 className="text-2xl font-bold mb-10">Favorite Jobs</h1>
       {favorites.length === 0 ? (
         <p>No favorite jobs yet.</p>
       ) : (
@@ -16,6 +18,7 @@ const Favorites = () => {
           ))}
         </div>
       )}
+    </div>
     </div>
   );
 };
