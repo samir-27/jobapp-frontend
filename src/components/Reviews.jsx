@@ -54,7 +54,7 @@ export default function Reviews() {
 
             const newReview = await response.json();
             setReviews([...reviews, newReview]);
-            setFormData({ ...formData, stars: 0, description: "" }); // Reset form
+            setFormData({ ...formData, stars: 0, description: "" });
         } catch (err) {
             console.error(err);
         }
@@ -69,8 +69,7 @@ export default function Reviews() {
                     <div className="flex justify-between items-center">
 
                         <h2 className="text-black text-4xl font-bold pb-10">Reviews</h2>
-                        {/* Add Review Button */}
-                        <button
+                                             <button
                             onClick={() => setIsReviewModalOpen(true)}
                             className="bg-blue-500 text-white px-4 mb-4 py-2 rounded mt-4"
                         >
@@ -106,7 +105,7 @@ export default function Reviews() {
                                     <a className="inline-flex items-center">
                                         <img
                                             alt="testimonial"
-                                            src={ review.userId.profileImg } // You can replace this with dynamic user profile image
+                                            src={ review.userId.profileImg }
                                             className="w-12 h-12 rounded-full flex-shrink-0 object-cover object-center"
                                         />
                                         <span className="pl-4">

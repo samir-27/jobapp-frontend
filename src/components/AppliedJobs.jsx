@@ -25,11 +25,20 @@ const AppliedJobs = () => {
   }, [userID]);
 
   return (
+<div className="min-h-screen">
+  {jobs.length === 0 ? (
+    <div className="text-center text-gray-600 text-lg mt-10">
+      You haven't applied to any jobs yet.
+    </div>
+  ) : (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
       {jobs.map((job) => (
         <ApplyJobCard key={job._id} job={job} />
       ))}
     </div>
+  )}
+</div>
+
   );
 };
 

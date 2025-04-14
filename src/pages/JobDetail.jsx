@@ -48,7 +48,7 @@ const JobDetailPage = () => {
     const formDataToSend = new FormData();
     formDataToSend.append("fullname", formData.fullname);
     formDataToSend.append("phone", formData.phone);
-    formDataToSend.append("address", formData.address);
+    formDataToSend.append("description", formData.description);
     formDataToSend.append("education", formData.education);
     formDataToSend.append("course", formData.course);
     formDataToSend.append("jobId", formData.jobId || id);
@@ -80,7 +80,7 @@ const JobDetailPage = () => {
       setFormData({
         fullname: "",
         phone: "",
-        address: "",
+        description: "",
         education: "diploma",
         course: "",
         resume: null,
@@ -164,9 +164,9 @@ const JobDetailPage = () => {
                 className="w-full p-2 mb-3 border rounded"
                 />
               <textarea
-                name="address"
-                placeholder="Address"
-                value={formData.address}
+                name="description"
+                placeholder="Description"
+                value={formData.description}
                 onChange={handleChange}
                 className="w-full p-2 mb-3 border rounded"
                 ></textarea>

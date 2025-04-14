@@ -1,21 +1,42 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaCircleUser } from 'react-icons/fa6';
 import { Link, useNavigate } from 'react-router-dom';
 
 const CompanyNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('authToken');
+    setIsAuthenticated(!!token);
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('authToken');
+    setIsAuthenticated(false);
+    navigate('/login');
+  };
+
+  const handleSignin = () => {
+    navigate('/login');
+  };
+
+  const handleMobileNavClick = () => {
+    setIsOpen(false); // close the menu after clicking a link
+  };
 
   return (
     <nav className="bg-blue-500 text-white z-50 top-0 sticky">
-      <div className="py-4 flex justify-between items-center container mx-auto">
+      <div className="py-4 flex justify-between items-center container mx-auto px-4">
         <div className="text-2xl font-bold">
-          <Link to="/">Get Placed</Link>
+          <Link to="/company/addjob" onClick={handleMobileNavClick}>Get Placed</Link>
         </div>
 
+        {/* Desktop Nav */}
         <div className="hidden md:flex space-x-8 items-center">
           <Link to="/company/addjob" className="hover:text-gray-300 font-medium">Create Job</Link>
           <Link to="/company/postedjobs" className="hover:text-gray-300 font-medium">Posted Jobs</Link>
-
           <Link to="/company/profile" className="hover:text-gray-300">
             <FaCircleUser size={30} />
           </Link>
@@ -43,28 +64,38 @@ const CompanyNavbar = () => {
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Dropdown Menu */}
       {isOpen && (
-        <div className="md:hidden bg-blue-500 shadow-lg">
-          <Link to="/company/home" className="hover:text-gray-300 font-medium">Home</Link>
-          <Link to="/company/addjob" className="hover:text-gray-300 font-medium">Create Job</Link>
-          <Link to="/company/postedjobs" className="hover:text-gray-300 font-medium">Posted Jobs</Link>
+        <div className="md:hidden bg-blue-500 px-4 py-2 space-y-2">
+          <Link
+            to="/company/home"
+            onClick={handleMobileNavClick}
+            className="block text-white hover:text-gray-300 font-medium"
+          >
+            Home
+          </Link>
+          <Link
+            to="/company/addjob"
+            onClick={handleMobileNavClick}
+            className="block text-white hover:text-gray-300 font-medium"
+          >
+            Create Job
+          </Link>
+          <Link
+            to="/company/postedjobs"
+            onClick={handleMobileNavClick}
+            className="block text-white hover:text-gray-300 font-medium"
+          >
+            Posted Jobs
+          </Link>
+          <Link
+            to="/company/profile"
+            onClick={handleMobileNavClick}
+            className="block text-white hover:text-gray-300 font-medium"
+          >
+            Profile
+          </Link>
 
-          {isAuthenticated ? (
-            <button
-              onClick={handleLogout}
-              className="w-full py-2 mt-2 bg-white text-blue-500 rounded-md shadow hover:bg-gray-200"
-            >
-              Log Out
-            </button>
-          ) : (
-            <button
-              onClick={handleSignin}
-              className="w-full py-2 mt-2 bg-white text-blue-500 rounded-md shadow hover:bg-gray-200"
-            >
-              Sign In
-            </button>
-          )}
         </div>
       )}
     </nav>
@@ -72,3 +103,4 @@ const CompanyNavbar = () => {
 };
 
 export default CompanyNavbar;
+

@@ -27,13 +27,16 @@ const Jobs = () => {
   },);
 
   return (
+    <div className="bg-blue-50  min-h-screen">
+
     <div className="py-3 container mx-auto">
         <div className="w-full">
-          <div className="grid grid-cols-3 gap-10">
+          <div className="grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1 gap-10">
             {jobs.map((job) => (
               <CompanyJobCard key={job.id} job={job} />
             ))}
           </div>
+              </div>
       </div>
     </div>
   );

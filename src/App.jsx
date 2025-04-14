@@ -24,10 +24,18 @@ import Companies from "./pages/Companies";
 import CompanyDetail from "./pages/CompanyDetail";
 import Footer from "./components/Footer";
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedUserRoute = ({ children }) => {
   const token = localStorage.getItem("authToken");
-  return token ? children : <Navigate to="/signin" />;
+  const role = localStorage.getItem("role");
+  return token && role === "user" ? children : <Navigate to="/signin" />;
 };
+
+const ProtectedCompanyRoute = ({ children }) => {
+  const token = localStorage.getItem("authToken");
+  const role = localStorage.getItem("role");
+  return token && role === "company" ? children : <Navigate to="/company/signup" />;
+};
+
 
 const App = () => {
   const location = useLocation();
@@ -56,27 +64,28 @@ const App = () => {
       <Route path="/signup" element={<Signup />} />
 
       {/* Protected Routes (User must be authenticated) */}
-      <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-      <Route path="/jobs" element={<ProtectedRoute><Jobs /></ProtectedRoute>} />
-      <Route path="/job-detail/:id" element={<ProtectedRoute><JobDetail /></ProtectedRoute>} />
-      <Route path="/about" element={<ProtectedRoute><About /></ProtectedRoute>} />
-      <Route path="/contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
-      <Route path="/companies" element={<ProtectedRoute><Companies /></ProtectedRoute>} />
-      <Route path="/comp-detail/:id" element={<ProtectedRoute><CompanyDetail /></ProtectedRoute>} />
-      <Route path="/favorites" element={<ProtectedRoute><Favorites /></ProtectedRoute>} />
-      
-      <Route path="/profile" element={<ProtectedRoute><Profile /></ProtectedRoute>}>
-        <Route index element={<MyProfile />} />
-        <Route path="appliedjobs" element={<AppliedJobs />} />
-      </Route>
+      <Route path="/" element={<ProtectedUserRoute><Home /></ProtectedUserRoute>} />
+<Route path="/jobs" element={<ProtectedUserRoute><Jobs /></ProtectedUserRoute>} />
+<Route path="/job-detail/:id" element={<ProtectedUserRoute><JobDetail /></ProtectedUserRoute>} />
+<Route path="/about" element={<ProtectedUserRoute><About /></ProtectedUserRoute>} />
+<Route path="/contact" element={<ProtectedUserRoute><Contact /></ProtectedUserRoute>} />
+<Route path="/companies" element={<ProtectedUserRoute><Companies /></ProtectedUserRoute>} />
+<Route path="/comp-detail/:id" element={<ProtectedUserRoute><CompanyDetail /></ProtectedUserRoute>} />
+<Route path="/favorites" element={<ProtectedUserRoute><Favorites /></ProtectedUserRoute>} />
 
-      {/* Protected Routes for Company Dashboard */}
-      <Route path="/company/signup" element={<CompanySignup />} />
-      <Route path="/company/addjob" element={<ProtectedRoute><AddJob /></ProtectedRoute>} />
-      <Route path="/company/postedjobs" element={<ProtectedRoute><PostedJobs /></ProtectedRoute>} />
-      <Route path="/company/profile" element={<ProtectedRoute><CompanyProfile /></ProtectedRoute>}>
-        <Route index element={<CompanyMyProfile />} />
-      </Route>
+<Route path="/profile" element={<ProtectedUserRoute><Profile /></ProtectedUserRoute>}>
+  <Route index element={<MyProfile />} />
+  <Route path="appliedjobs" element={<AppliedJobs />} />
+</Route>
+
+<Route path="/company/signup" element={<CompanySignup />} />
+
+<Route path="/company/addjob" element={<ProtectedCompanyRoute><AddJob /></ProtectedCompanyRoute>} />
+<Route path="/company/postedjobs" element={<ProtectedCompanyRoute><PostedJobs /></ProtectedCompanyRoute>} />
+<Route path="/company/profile" element={<ProtectedCompanyRoute><CompanyProfile /></ProtectedCompanyRoute>}>
+  <Route index element={<CompanyMyProfile />} />
+</Route>
+
     </Routes>
     {
           !["/signin", "/signup", "/company/signup"].includes(location.pathname) &&

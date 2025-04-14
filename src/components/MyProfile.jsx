@@ -1,5 +1,5 @@
+import React, { useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
-import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
 const MyProfile = () => {
@@ -9,12 +9,19 @@ const MyProfile = () => {
     fullname: '',
     phone: '',
     address: '',
+    city: '',
+    pincode: '',
+    state: '',
     education: '',
     course: '',
     image: '',
   });
 
   const [selectedImage, setSelectedImage] = useState(null);
+  const [passwords, setPasswords] = useState({
+    currentPassword: '',
+    newPassword: '',
+  });
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -30,7 +37,6 @@ const MyProfile = () => {
         }
 
         const userData = await response.json();
-        console.log(userData)
         setFormData({
           name: userData.name,
           email: userData.email,
@@ -53,21 +59,25 @@ const MyProfile = () => {
     fetchUserData();
   }, []);
 
-
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const handlePasswordChange = (e) => {
+    const { name, value } = e.target;
+    setPasswords({ ...passwords, [name]: value });
   };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setSelectedImage(file);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const token = localStorage.getItem("authToken");
-
+    const token = localStorage.getItem('authToken');
     const decodedToken = jwtDecode(token);
     const userId = decodedToken.id;
 
@@ -86,7 +96,6 @@ const MyProfile = () => {
 
         const uploadResult = await uploadResponse.json();
         imageUrl = uploadResult.secure_url;
-        console.log("Cloudinary Image URL:", imageUrl);
       } catch (error) {
         console.error("Image upload error:", error);
         toast.error("Failed to upload image");
@@ -94,8 +103,12 @@ const MyProfile = () => {
       }
     }
 
-    const finalData = { ...formData, image: imageUrl };
-    console.log("Final Data Sent to Backend:", finalData);
+    const finalData = {
+      ...formData,
+      image: imageUrl,
+      currentPassword: passwords.currentPassword || undefined,
+      password: passwords.newPassword || undefined,
+    };
 
     try {
       const response = await fetch(`http://localhost:3000/users/${userId}`, {
@@ -108,17 +121,15 @@ const MyProfile = () => {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Network response was not ok');
+        throw new Error(errorData.message || 'Update failed');
       }
 
-      console.log("Profile updated successfully");
-      toast.success("Profile updated successfully");
+      toast.success('Profile updated successfully');
     } catch (error) {
       console.error('Error:', error);
-      toast.error("Something went wrong");
+      toast.error(error.message || 'Something went wrong');
     }
   };
-
 
   return (
     <div className="mx-auto mt-5">
@@ -135,16 +146,8 @@ const MyProfile = () => {
             )}
             <label className="block text-sm font-medium text-gray-600">Profile Image</label>
             <input type="file" accept="image/*" onChange={handleImageChange} className="w-full px-3 py-2 border rounded-lg" />
-
-            {/* Show Selected Image Preview or Existing Profile Image */}
           </div>
-          {/* <div>
-            <label className="block text-sm font-medium text-gray-600">Profile Image</label>
-            <input type="file" accept="image/*" onChange={handleImageChange} className="w-full px-3 py-2 border rounded-lg" />
-            {formData.image && (
-              <img src={formData.image} alt="Profile" className="mt-2 w-32 h-32 rounded-lg object-cover" />
-            )}
-          </div> */}
+
           {/* User Name & Email - Readonly */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -201,7 +204,6 @@ const MyProfile = () => {
           <div>
             <label className="block text-sm font-medium text-gray-600">Address</label>
             <textarea
-              type="textarea"
               name="address"
               value={formData.address}
               onChange={handleChange}
@@ -209,68 +211,60 @@ const MyProfile = () => {
               placeholder="Enter your address"
             />
           </div>
-          <div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
-
-            <div className=''>
-              <label className="block text-sm font-medium text-gray-600">Pin Code</label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-gray-600">Pincode</label>
               <input
-                type="text"
                 name="pincode"
                 value={formData.pincode}
                 onChange={handleChange}
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-                placeholder="Enter your pin code"
+                placeholder="Enter your pincode"
               />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-600">City</label>
               <input
-                type="text"
                 name="city"
-                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
                 value={formData.city}
                 onChange={handleChange}
-                placeholder="Enter your City"
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
+                placeholder="Enter your city"
               />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-600">State</label>
               <input
-                type="text"
                 name="state"
-              value={formData.state}
+                value={formData.state}
                 onChange={handleChange}
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-                placeholder="Enter your State"
+                placeholder="Enter your state"
               />
             </div>
           </div>
-
-          {/* Education & Course */}
+          {/* Password Fields */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-600">Education</label>
-              <select
-                name="education"
-                value={formData.education}
-                onChange={handleChange}
+              <label className="block text-sm font-medium text-gray-600">Current Password</label>
+              <input
+                type="password"
+                name="currentPassword"
+                value={passwords.currentPassword}
+                onChange={handlePasswordChange}
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-              >
-                <option value="">Select Education</option>
-                <option value="diploma">Diploma</option>
-                <option value="graduation">Graduation</option>
-                <option value="post-graduation">Post-Graduation</option>
-              </select>
+                placeholder="Enter your current password"
+              />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-600">Course</label>
+              <label className="block text-sm font-medium text-gray-600">New Password</label>
               <input
-                type="text"
-                name="course"
-                value={formData.course}
-                onChange={handleChange}
+                type="password"
+                name="newPassword"
+                value={passwords.newPassword}
+                onChange={handlePasswordChange}
                 className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300"
-                placeholder="Enter your course"
+                placeholder="Enter your new password"
               />
             </div>
           </div>
@@ -285,7 +279,6 @@ const MyProfile = () => {
         </form>
       </div>
     </div>
-
   );
 };
 

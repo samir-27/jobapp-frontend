@@ -20,7 +20,7 @@ const Companies = () => {
         fetchJobs();
        });
   return (
-    <div className='bg-blue-50 h-screen'>
+    <div className='bg-blue-50 min-h-screen'>
       <div className="container mx-auto py-10">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {companies.map((company) => (

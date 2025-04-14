@@ -54,7 +54,7 @@ const Home = () => {
       <Cards />
       <TopCompanies />
       <Featuredjob />
-      <Reviews />
+      {/* <Reviews /> */}
     </div>
   );
 };

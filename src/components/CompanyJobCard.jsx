@@ -21,11 +21,6 @@ const CompanyJobCard = ({ job }) => {
         niceToHave: job.niceToHave || [],
     });
 
-    const [skillInputValue, setSkillInputValue] = useState("");
-    const [requirementInputValue, setRequirementInputValue] = useState("");
-    const [responsibilityInputValue, setResponsibilityInputValue] = useState("");
-    const [niceToHaveInputValue, setNiceToHaveInputValue] = useState("");
-
     const fetchApplications = async () => {
         try {
             const response = await fetch(`http://localhost:3000/applyjob/job/${job._id}`);
@@ -103,9 +98,6 @@ const CompanyJobCard = ({ job }) => {
                 <span className="flex items-center gap-1 font-medium">
                     🏆 Experience: <span className="text-gray-800">{job.experience}</span>
                 </span>
-                <span className="flex items-center gap-1 font-medium">
-                    🏢 Company: <span className="text-gray-800">{job.companyName}</span>
-                </span>
             </div>
 
             <div className="mt-5 flex flex-wrap gap-3">
@@ -129,51 +121,55 @@ const CompanyJobCard = ({ job }) => {
                 </button>
             </div>
             {isEditing && (
-                <form onSubmit={handleUpdate} className="mt-6">
-                    <div className="mb-4">
-                        <label htmlFor="title" className="block text-sm font-medium text-gray-700">Title</label>
-                        <input
-                            type="text"
-                            id="title"
-                            name="title"
-                            value={formData.title}
-                            onChange={handleChange}
-                            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
-                        <textarea
-                            id="description"
-                            name="description"
-                            value={formData.description}
-                            onChange={handleChange}
-                            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                        ></textarea>
-                    </div>
-                    <div className="mb-4">
-                        <label htmlFor="salary" className="block text-sm font-medium text-gray-700">Salary</label>
-                        <input
-                            type="text"
-                            id="salary"
-                            name="salary"
-                            value={formData.salary}
-                            onChange={handleChange}
-                            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <label htmlFor="role" className="block text-sm font-medium text-gray-700">Role</label>
-                        <input
-                            type="text"
-                            id="role"
-                            name="eolw"
-                            value={formData.role}
-                            onChange={handleChange}
-                            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                        />
-                    </div>
-                    <div className="mb-4">
+                <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center px-4">
+                    <div className="bg-white rounded-2xl shadow-2xl relative p-6">
+                        <div className="flex justify-between items-center border-b pb-4 mb-4">
+
+                            <form onSubmit={handleUpdate} className="mt-6">
+                                <div className="mb-4">
+                                    <label htmlFor="title" className="block text-sm font-medium text-gray-700">Title</label>
+                                    <input
+                                        type="text"
+                                        id="title"
+                                        name="title"
+                                        value={formData.title}
+                                        onChange={handleChange}
+                                        className="mt-1 block w-96 px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
+                                    <textarea
+                                        id="description"
+                                        name="description"
+                                        value={formData.description}
+                                        onChange={handleChange}
+                                        className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                                    ></textarea>
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="salary" className="block text-sm font-medium text-gray-700">Salary</label>
+                                    <input
+                                        type="text"
+                                        id="salary"
+                                        name="salary"
+                                        value={formData.salary}
+                                        onChange={handleChange}
+                                        className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                                    />
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="role" className="block text-sm font-medium text-gray-700">Role</label>
+                                    <input
+                                        type="text"
+                                        id="role"
+                                        name="eolw"
+                                        value={formData.role}
+                                        onChange={handleChange}
+                                        className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                                    />
+                                </div>
+                                {/* <div className="mb-4">
                         <label htmlFor="company-name" className="block text-sm font-medium text-gray-700">Company Name</label>
                         <input
                             type="text"
@@ -183,85 +179,125 @@ const CompanyJobCard = ({ job }) => {
                             onChange={handleChange}
                             className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                         />
-                    </div>
-                    <div className="mb-4">
-                        <label htmlFor="experience" className="block text-sm font-medium text-gray-700">Experience</label>
-                        <select
-                            id="experience"
-                            name="experience"
-                            value={formData.experience}
-                            onChange={handleChange}
-                            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                        >
-                            <option value="">Select...</option>
-                            <option value="fresher">Fresher</option>
-                            <option value="1-3years">1-3 years</option>
-                            <option value="3-5years">3-5 years</option>
-                            <option value="5-10years">5-10 years</option>
-                            <option value="10-20years">10-20 years</option>
-                        </select>
-                    </div>
-                    <div className="mb-4">
-                        <label htmlFor="location" className="block text-sm font-medium text-gray-700">Location</label>
-                        <select
-                            id="location"
-                            name="location"
-                            value={formData.location}
-                            onChange={handleChange}
-                            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                        >
-                            <option value="">Select...</option>
-                            <option value="remote">Remote</option>
-                            <option value="hybrid">Hybrid</option>
-                            <option value="on-site">On-site</option>
-                        </select>
-                    </div>
-                    <div className="mb-4">
-                        <label htmlFor="jobType" className="block text-sm font-medium text-gray-700">Job Type</label>
-                        <select
-                            id="jobType"
-                            name="jobType"
-                            value={formData.jobType}
-                            onChange={handleChange}
-                            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                        >
-                            <option value="">Select...</option>
-                            <option value="Full-Time">Full-Time</option>
-                            <option value="Part-Time">Part-Time</option>
-                            <option value="Contract">Contract</option>
-                        </select>
-                    </div>
-                    <button
-                        type="submit"
-                        className="mt-4 px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-400"
-                    >
-                        Save
-                    </button>
+                    </div> */}
+                                <div className="mb-4">
+                                    <label htmlFor="experience" className="block text-sm font-medium text-gray-700">Experience</label>
+                                    <select
+                                        id="experience"
+                                        name="experience"
+                                        value={formData.experience}
+                                        onChange={handleChange}
+                                        className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                                    >
+                                        <option value="">Select...</option>
+                                        <option value="fresher">Fresher</option>
+                                        <option value="1-3years">1-3 years</option>
+                                        <option value="3-5years">3-5 years</option>
+                                        <option value="5-10years">5-10 years</option>
+                                        <option value="10-20years">10-20 years</option>
+                                    </select>
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="location" className="block text-sm font-medium text-gray-700">Location</label>
+                                    <select
+                                        id="location"
+                                        name="location"
+                                        value={formData.location}
+                                        onChange={handleChange}
+                                        className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                                    >
+                                        <option value="">Select...</option>
+                                        <option value="remote">Remote</option>
+                                        <option value="hybrid">Hybrid</option>
+                                        <option value="on-site">On-site</option>
+                                    </select>
+                                </div>
+                                <div className="mb-4">
+                                    <label htmlFor="jobType" className="block text-sm font-medium text-gray-700">Job Type</label>
+                                    <select
+                                        id="jobType"
+                                        name="jobType"
+                                        value={formData.jobType}
+                                        onChange={handleChange}
+                                        className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
+                                    >
+                                        <option value="">Select...</option>
+                                        <option value="Full-Time">Full-Time</option>
+                                        <option value="Part-Time">Part-Time</option>
+                                        <option value="Contract">Contract</option>
+                                    </select>
+                                </div>
+                                <div className="flex justify-between mt-4 space-x-4">
+                                    <button
+                                        type="submit"
+                                        className="px-6 py-2 bg-blue-500 text-white font-semibold rounded-lg hover:bg-blue-400"
+                                    >
+                                        Save
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => setIsEditing(false)}
+                                        className="px-6 py-2 bg-gray-300 text-gray-800 font-semibold rounded-lg hover:bg-gray-400"
+                                    >
+                                        Cancel
+                                    </button>
+                                </div>
 
-                </form>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
             )}
 
             {isModalOpen && (
-                <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
-                    <div className="bg-white p-6 rounded-lg shadow-lg w-1/2">
-                        <h2 className="text-xl font-bold mb-4">Applications</h2>
-                        <button className="text-gray-600" onClick={() => setIsModalOpen(false)}>✕</button>
+                <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center px-4">
+                    <div className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[80vh] overflow-y-auto relative p-6">
+                        <div className="flex justify-between items-center border-b pb-4 mb-4">
+                            <h2 className="text-2xl font-semibold text-gray-800">Applications</h2>
+                            <button
+                                onClick={() => setIsModalOpen(false)}
+                                className="text-gray-500 hover:text-red-500 text-2xl font-bold"
+                            >
+                                &times;
+                            </button>
+                        </div>
+
                         {applications.length > 0 ? (
-                            applications.map((app) => (
-                                <div key={app._id} className="p-4 border-b border-gray-300">
-                                    <p><strong>Name:</strong> {app.fullname}</p>
-                                    <p><strong>Phone:</strong> {app.phone}</p>
-                                    <p><strong>Course:</strong> {app.course}</p>
-                                    <p><strong>Education:</strong> {app.education}</p>
-                                    <p><strong>Resume:</strong> <a href={app.resumeUrl} className="text-blue-500" target="_blank">View</a></p>
-                                </div>
-                            ))
+                            <div className="space-y-4">
+                                {applications.map((app) => (
+                                    <div
+                                        key={app._id}
+                                        className="bg-blue-100 border border-gray-200 rounded-xl p-4 hover:shadow-md transition-shadow"
+                                    >
+                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-2">
+                                            <p><span className="font-medium text-gray-700">Name:</span> {app.fullname}</p>
+                                            <p><span className="font-medium text-gray-700">Phone:</span> {app.phone}</p>
+                                            <p><span className="font-medium text-gray-700">Course:</span> {app.course}</p>
+                                            <p><span className="font-medium text-gray-700">Education:</span> {app.education}</p>
+                                            <p><span className="font-medium text-gray-700">Description:</span> {app.description}</p>
+                                            <p className="md:col-span-2">
+                                                <span className="font-medium text-gray-700">Resume:</span>{' '}
+                                                <a
+                                                    href={app.resumeUrl}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="text-blue-600 hover:underline"
+                                                >
+                                                    Download Resume
+                                                </a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
                         ) : (
-                            <p>No applications found.</p>
+                            <p className="text-gray-600">No applications found.</p>
                         )}
                     </div>
                 </div>
             )}
+
         </div>
     );
 };
