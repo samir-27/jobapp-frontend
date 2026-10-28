@@ -146,7 +146,7 @@ const JobDetailPage = () => {
     loadCandidateProfile();
   }, [loadCandidateProfile]);
 
-  const handleOpenApplyModal = () => {
+  const handleOpenApplyModal = async () => {
     const token = localStorage.getItem("authToken");
     const role = localStorage.getItem("role");
 
@@ -166,6 +166,8 @@ const JobDetailPage = () => {
       return;
     }
 
+    // Refresh candidate profile & resume right before opening modal
+    await loadCandidateProfile();
     setIsModalOpen(true);
   };
 
@@ -205,6 +207,11 @@ const JobDetailPage = () => {
 
     if (resumeMode === "upload" && !formData.resumeFile) {
       toast.warning("Please upload a resume file (PDF or DOCX).");
+      return;
+    }
+
+    if (resumeMode === "existing" && !existingResumeInfo?.url) {
+      toast.warning("No profile resume found. Please upload a resume file.");
       return;
     }
 
