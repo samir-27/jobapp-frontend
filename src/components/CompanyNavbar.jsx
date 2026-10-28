@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { FaCircleUser } from 'react-icons/fa6';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { FaCircleUser } from "react-icons/fa6";
+import { Link, useNavigate } from "react-router-dom";
+import NotificationsDrawer from "./NotificationsDrawer";
 
 const CompanyNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -8,38 +9,71 @@ const CompanyNavbar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem("authToken");
     setIsAuthenticated(!!token);
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem('authToken');
+    localStorage.removeItem("authToken");
+    localStorage.removeItem("role");
+    localStorage.removeItem("refreshToken");
     setIsAuthenticated(false);
-    navigate('/login');
-  };
-
-  const handleSignin = () => {
-    navigate('/login');
+    navigate("/signin");
   };
 
   const handleMobileNavClick = () => {
-    setIsOpen(false); // close the menu after clicking a link
+    setIsOpen(false);
   };
 
   return (
-    <nav className="bg-blue-500 text-white z-50 top-0 sticky">
-      <div className="py-4 flex justify-between items-center container mx-auto px-4">
-        <div className="text-2xl font-bold">
-          <Link to="/company/addjob" onClick={handleMobileNavClick}>Get Placed</Link>
+    <nav className="bg-slate-900 text-white z-50 top-0 sticky shadow-md">
+      <div className="py-3.5 flex justify-between items-center container mx-auto px-4">
+        <div className="text-xl font-bold tracking-tight">
+          <Link
+            to="/company/postedjobs"
+            onClick={handleMobileNavClick}
+            className="flex items-center gap-2"
+          >
+            <span className="bg-blue-600 text-white px-2 py-0.5 rounded font-black text-sm">
+              RECRUITER
+            </span>
+            <span>Workplace</span>
+          </Link>
         </div>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex space-x-8 items-center">
-          <Link to="/company/addjob" className="hover:text-gray-300 font-medium">Create Job</Link>
-          <Link to="/company/postedjobs" className="hover:text-gray-300 font-medium">Posted Jobs</Link>
-          <Link to="/company/profile" className="hover:text-gray-300">
-            <FaCircleUser size={30} />
+        <div className="hidden md:flex space-x-6 items-center">
+          <Link
+            to="/company/postedjobs"
+            className="hover:text-blue-400 font-medium text-sm"
+          >
+            Hiring Pipeline
           </Link>
+          <Link
+            to="/company/addjob"
+            className="hover:text-blue-400 font-medium text-sm"
+          >
+            Post Vacancy
+          </Link>
+
+          {isAuthenticated && <NotificationsDrawer />}
+
+          <Link
+            to="/company/profile"
+            className="hover:text-blue-400"
+            title="Company Profile"
+          >
+            <FaCircleUser size={26} />
+          </Link>
+
+          {isAuthenticated && (
+            <button
+              onClick={handleLogout}
+              className="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs px-3 py-1.5 rounded-lg border border-slate-700 transition"
+            >
+              Sign Out
+            </button>
+          )}
         </div>
 
         {/* Mobile Menu Button */}
@@ -47,55 +81,49 @@ const CompanyNavbar = () => {
           className="md:hidden focus:outline-none"
           onClick={() => setIsOpen(!isOpen)}
         >
-          <svg
-            className="w-7 h-7"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
-            />
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            {isOpen ? (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+            ) : (
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
+            )}
           </svg>
         </button>
       </div>
 
-      {/* Mobile Dropdown Menu */}
+      {/* Mobile Dropdown */}
       {isOpen && (
-        <div className="md:hidden bg-blue-500 px-4 py-2 space-y-2">
+        <div className="md:hidden bg-slate-800 text-white px-4 py-3 space-y-2 border-t border-slate-700">
           <Link
-            to="/company/home"
+            to="/company/postedjobs"
             onClick={handleMobileNavClick}
-            className="block text-white hover:text-gray-300 font-medium"
+            className="block py-1 hover:text-blue-400"
           >
-            Home
+            Hiring Pipeline
           </Link>
           <Link
             to="/company/addjob"
             onClick={handleMobileNavClick}
-            className="block text-white hover:text-gray-300 font-medium"
+            className="block py-1 hover:text-blue-400"
           >
-            Create Job
-          </Link>
-          <Link
-            to="/company/postedjobs"
-            onClick={handleMobileNavClick}
-            className="block text-white hover:text-gray-300 font-medium"
-          >
-            Posted Jobs
+            Post Vacancy
           </Link>
           <Link
             to="/company/profile"
             onClick={handleMobileNavClick}
-            className="block text-white hover:text-gray-300 font-medium"
+            className="block py-1 hover:text-blue-400"
           >
-            Profile
+            Company Profile
           </Link>
-
+          <button
+            onClick={() => {
+              setIsOpen(false);
+              handleLogout();
+            }}
+            className="w-full text-left py-1 text-red-400 font-semibold"
+          >
+            Sign Out
+          </button>
         </div>
       )}
     </nav>
@@ -103,4 +131,3 @@ const CompanyNavbar = () => {
 };
 
 export default CompanyNavbar;
-

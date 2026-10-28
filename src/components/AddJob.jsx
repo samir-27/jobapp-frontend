@@ -1,213 +1,381 @@
-import { jwtDecode } from 'jwt-decode';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { fetchWithAuth } from '../utils/api';
+import { useNavigate } from 'react-router-dom';
 
-const FormExample = () => {
+const AddJob = () => {
+  const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [role, setRole] = useState('');
   const [salary, setSalary] = useState('');
-  const [companyName, setCompanyName] = useState('');
-  const [location, setLocation] = useState('');
-  const [jobType, setJobType] = useState('');
+  const [location, setLocation] = useState('remote');
+  const [jobType, setJobType] = useState('Full-Time');
+  const [experience, setExperience] = useState('1-3years');
+  const [status] = useState('draft'); // 'draft' | 'published'
+
   const [skills, setSkills] = useState([]);
-  const [experience, setExperience] = useState('');
-  const [requirementInputValue, setRequirementInputValue] = useState('')
-  const [responsibilityInputValue, setResponsibilityInputValue] = useState('')
-  const [niceToHaveInputValue, setNiceToHaveInputValue] = useState('')
-  const [skillInputValue, setSkillInputValue] = useState('')
+  const [skillInputValue, setSkillInputValue] = useState('');
   const [requirements, setRequirements] = useState([]);
+  const [requirementInputValue, setRequirementInputValue] = useState('');
   const [responsibilities, setResponsibilities] = useState([]);
+  const [responsibilityInputValue, setResponsibilityInputValue] = useState('');
   const [niceToHave, setNiceToHave] = useState([]);
-
-  const handleTitleChange = (e) => {
-    setTitle(e.target.value);
-  };
-
-  const handleDescriptionChange = (e) => {
-    setDescription(e.target.value);
-  };
-
-  const handleRoleChange = (e) => {
-    setRole(e.target.value);
-  };
-
-  const handleSalaryChange = (e) => {
-    setSalary(e.target.value);
-  };
-
-  const handleCompanyChange = (e) => {
-    setCompanyName(e.target.value);
-  };
-
-  const handleJobTypeChange = (e) => {
-    setJobType(e.target.value);
-  };
-
-  const handleLocationChange = (e) => {
-    setLocation(e.target.value);
-  };
-
-  const handleExperienceChange = (e) => {
-    setExperience(e.target.value);
-  };
-
-  const handleSkillInputChange = (e) => {
-    setSkillInputValue(e.target.value);
-  }
-
-  const handleRequirementInputChange = (e) => {
-    setRequirementInputValue(e.target.value);
-  };
-  const handleResponsibilityInputChange = (e) => {
-    setResponsibilityInputValue(e.target.value);
-  };
-  const handleNiceToHaveInputChange = (e) => {
-    setNiceToHaveInputValue(e.target.value);
-  };
+  const [niceToHaveInputValue, setNiceToHaveInputValue] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
   const handleAddSkill = () => {
-    if (skillInputValue.trim()) {
-      setSkills([...skills, skillInputValue]);
+    if (skillInputValue.trim() && !skills.includes(skillInputValue.trim())) {
+      setSkills([...skills, skillInputValue.trim()]);
       setSkillInputValue('');
     }
   };
 
   const handleAddRequirement = () => {
     if (requirementInputValue.trim()) {
-      setRequirements([...requirements, requirementInputValue]);
+      setRequirements([...requirements, requirementInputValue.trim()]);
       setRequirementInputValue('');
     }
   };
 
   const handleAddResponsibility = () => {
     if (responsibilityInputValue.trim()) {
-      setResponsibilities([...responsibilities, responsibilityInputValue]);
+      setResponsibilities([...responsibilities, responsibilityInputValue.trim()]);
       setResponsibilityInputValue('');
     }
   };
 
   const handleAddNiceToHave = () => {
     if (niceToHaveInputValue.trim()) {
-      setNiceToHave([...niceToHave, niceToHaveInputValue]);
+      setNiceToHave([...niceToHave, niceToHaveInputValue.trim()]);
       setNiceToHaveInputValue('');
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async (submitStatus) => {
+    if (!title || !description || !role || !salary || !location || !experience) {
+      toast.error('Please fill in all required job fields.');
+      return;
+    }
 
-    const formData = {
+    const payload = {
       title,
       description,
       role,
-      skills,
-      salary,
+      skills: skills.length > 0 ? skills : ['General'],
+      salary: Number(salary),
       experience,
       location,
-      companyName,
-      jobType,
-      responsibilities,
-      requirements,
+      jobType: jobType || 'Full-Time',
+      status: submitStatus || status,
+      responsibilities: responsibilities.length > 0 ? responsibilities : ['Core responsibilities as per job description'],
+      requirements: requirements.length > 0 ? requirements : ['Relevant professional experience'],
       niceToHave,
     };
-    const token = localStorage.getItem("authToken")
-    const decodedToken = jwtDecode(token);
-    // console.log("decoded",decodedToken.id)
-    const ComId = decodedToken.id;
+
     try {
-      const response = await fetch(`http://localhost:3000/jobs?companyId=${ComId}`, {
+      setSubmitting(true);
+      const response = await fetchWithAuth('/jobs', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        const errData = await response.json().catch(() => ({}));
+        throw new Error(errData.message || 'Failed to create job');
       }
 
-      const result = await response.json();
-      toast.success("job created successfully")
+      toast.success(
+        submitStatus === 'published'
+          ? 'Job published to candidate marketplace!'
+          : 'Job saved as draft successfully!'
+      );
+      navigate('/company/postedjobs');
     } catch (error) {
-      console.error('Error:', error);
-      toast.error("something went wrong")
+      console.error('Error creating job:', error);
+      toast.error(error.message || 'Something went wrong creating the job');
+    } finally {
+      setSubmitting(false);
     }
   };
 
   return (
-<div className="p-6 container mx-auto">
-  <form onSubmit={handleSubmit} className="bg-white p-8 rounded-lg border shadow-md grid grid-cols-1 md:grid-cols-2 gap-6">
-    <h2 className="text-2xl font-bold text-blue-500 mb-6 md:col-span-2">Add Job</h2>
+    <div className="py-10 bg-gray-50 min-h-screen">
+      <div className="container mx-auto px-4 max-w-4xl">
+        <div className="mb-6">
+          <h1 className="text-3xl font-bold text-gray-900">Create Vacancy</h1>
+          <p className="text-sm text-gray-500 mt-1">
+            Post an opening to attract candidates or save as a draft to finish later.
+          </p>
+        </div>
 
-    <input type="text" id="title" onChange={handleTitleChange} value={title} placeholder="Enter Title" className="border p-2 rounded w-full" />
-    <input type="text" id="description" onChange={handleDescriptionChange} value={description} placeholder="Enter Description" className="border p-2 rounded w-full" />
-    <input type="text" id="role" onChange={handleRoleChange} value={role} placeholder="Enter Role" className="border p-2 rounded w-full" />
-    <input type="text" id="salary" onChange={handleSalaryChange} value={salary} placeholder="Enter Salary" className="border p-2 rounded w-full" />
-    <select id="experience" value={experience} onChange={handleExperienceChange} className="border p-2 rounded w-full">
-      <option value="">Select Experience...</option>
-      <option value="fresher">Fresher</option>
-      <option value="1-3years">1-3 years</option>
-      <option value="3-5years">3-5 years</option>
-      <option value="5-10years">5-10 years</option>
-      <option value="10-20years">10-20 years</option>
-    </select>
-    <select id="location" value={location} onChange={handleLocationChange} className="border p-2 rounded w-full">
-      <option value="">Select Location...</option>
-      <option value="remote">Remote</option>
-      <option value="hybrid">Hybrid</option>
-      <option value="on-site">On-site</option>
-    </select>
-    <select id="jobType" value={jobType} onChange={handleJobTypeChange} className="border p-2 rounded w-full">
-      <option value="">Select Job Type...</option>
-      <option value="Full-Time">Full-Time</option>
-      <option value="Part-Time">Part-Time</option>
-      <option value="Contract">Contract</option>
-    </select>
+        <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-200">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="block text-xs font-bold text-gray-700 uppercase mb-1">
+                Job Title *
+              </label>
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                placeholder="e.g. Senior Frontend Engineer"
+                className="border border-gray-300 rounded-lg p-2.5 w-full text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                required
+              />
+            </div>
 
-    <div className="md:col-span-2">
-      <label className="block font-medium">Skills</label>
-      <div className="flex items-center">
-        <input type="text" id="skills" value={skillInputValue} onChange={handleSkillInputChange} placeholder="Enter skill" className="border p-2 rounded-l w-full" />
-        <button type="button" onClick={handleAddSkill} className="px-4 py-2 bg-blue-500 text-white rounded-r">Add</button>
+            <div>
+              <label className="block text-xs font-bold text-gray-700 uppercase mb-1">
+                Role Category *
+              </label>
+              <input
+                type="text"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                placeholder="e.g. Software Development"
+                className="border border-gray-300 rounded-lg p-2.5 w-full text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-gray-700 uppercase mb-1">
+                Annual Salary ($) *
+              </label>
+              <input
+                type="number"
+                value={salary}
+                onChange={(e) => setSalary(e.target.value)}
+                placeholder="e.g. 130000"
+                className="border border-gray-300 rounded-lg p-2.5 w-full text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                min={10000}
+                required
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-gray-700 uppercase mb-1">
+                Experience Level *
+              </label>
+              <select
+                value={experience}
+                onChange={(e) => setExperience(e.target.value)}
+                className="border border-gray-300 rounded-lg p-2.5 w-full text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              >
+                <option value="fresher">Fresher / Graduate</option>
+                <option value="1-3years">1 - 3 years</option>
+                <option value="3-5years">3 - 5 years</option>
+                <option value="5-10years">5 - 10 years</option>
+                <option value="10-20years">10+ years</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-gray-700 uppercase mb-1">
+                Location Mode *
+              </label>
+              <select
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                className="border border-gray-300 rounded-lg p-2.5 w-full text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              >
+                <option value="remote">Remote</option>
+                <option value="hybrid">Hybrid</option>
+                <option value="on-site">On-Site</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-xs font-bold text-gray-700 uppercase mb-1">
+                Employment Type *
+              </label>
+              <select
+                value={jobType}
+                onChange={(e) => setJobType(e.target.value)}
+                className="border border-gray-300 rounded-lg p-2.5 w-full text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+              >
+                <option value="Full-Time">Full-Time</option>
+                <option value="Part-Time">Part-Time</option>
+                <option value="Contract">Contract</option>
+              </select>
+            </div>
+
+            <div className="md:col-span-2">
+              <label className="block text-xs font-bold text-gray-700 uppercase mb-1">
+                Job Description *
+              </label>
+              <textarea
+                rows={5}
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                placeholder="Comprehensive overview of role, team mission, and qualifications..."
+                className="border border-gray-300 rounded-lg p-3 w-full text-sm focus:ring-2 focus:ring-blue-500 outline-none"
+                required
+              />
+            </div>
+
+            {/* Skills */}
+            <div className="md:col-span-2">
+              <label className="block text-xs font-bold text-gray-700 uppercase mb-1">
+                Required Technical Skills
+              </label>
+              <div className="flex gap-2 mb-2">
+                <input
+                  type="text"
+                  value={skillInputValue}
+                  onChange={(e) => setSkillInputValue(e.target.value)}
+                  placeholder="e.g. React, NestJS, AWS"
+                  className="border border-gray-300 rounded-lg p-2 text-sm flex-1"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault();
+                      handleAddSkill();
+                    }
+                  }}
+                />
+                <button
+                  type="button"
+                  onClick={handleAddSkill}
+                  className="px-4 py-2 bg-gray-800 text-white text-xs font-bold rounded-lg"
+                >
+                  Add
+                </button>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {skills.map((s, i) => (
+                  <span
+                    key={i}
+                    className="inline-flex items-center gap-1 px-3 py-1 bg-blue-50 text-blue-700 border border-blue-200 text-xs font-bold rounded-full"
+                  >
+                    {s}
+                    <button
+                      type="button"
+                      onClick={() => setSkills(skills.filter((_, idx) => idx !== i))}
+                      className="ml-1 text-blue-500 hover:text-red-500"
+                    >
+                      &times;
+                    </button>
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Responsibilities */}
+            <div className="md:col-span-2">
+              <label className="block text-xs font-bold text-gray-700 uppercase mb-1">
+                Responsibilities
+              </label>
+              <div className="flex gap-2 mb-2">
+                <input
+                  type="text"
+                  value={responsibilityInputValue}
+                  onChange={(e) => setResponsibilityInputValue(e.target.value)}
+                  placeholder="e.g. Lead architecture discussions for high-throughput microservices"
+                  className="border border-gray-300 rounded-lg p-2 text-sm flex-1"
+                />
+                <button
+                  type="button"
+                  onClick={handleAddResponsibility}
+                  className="px-4 py-2 bg-gray-800 text-white text-xs font-bold rounded-lg"
+                >
+                  Add
+                </button>
+              </div>
+              <ul className="space-y-1">
+                {responsibilities.map((r, i) => (
+                  <li key={i} className="text-xs text-gray-600 flex items-center gap-2">
+                    <span>• {r}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Requirements */}
+            <div className="md:col-span-2">
+              <label className="block text-xs font-bold text-gray-700 uppercase mb-1">
+                Requirements
+              </label>
+              <div className="flex gap-2 mb-2">
+                <input
+                  type="text"
+                  value={requirementInputValue}
+                  onChange={(e) => setRequirementInputValue(e.target.value)}
+                  placeholder="e.g. 3+ years experience with NestJS and MongoDB"
+                  className="border border-gray-300 rounded-lg p-2 text-sm flex-1"
+                />
+                <button
+                  type="button"
+                  onClick={handleAddRequirement}
+                  className="px-4 py-2 bg-gray-800 text-white text-xs font-bold rounded-lg"
+                >
+                  Add
+                </button>
+              </div>
+              <ul className="space-y-1">
+                {requirements.map((req, i) => (
+                  <li key={i} className="text-xs text-gray-600 flex items-center gap-2">
+                    <span>• {req}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Nice to have */}
+            <div className="md:col-span-2">
+              <label className="block text-xs font-bold text-gray-700 uppercase mb-1">
+                Nice-to-Have
+              </label>
+              <div className="flex gap-2 mb-2">
+                <input
+                  type="text"
+                  value={niceToHaveInputValue}
+                  onChange={(e) => setNiceToHaveInputValue(e.target.value)}
+                  placeholder="e.g. Experience with Kubernetes and CI/CD"
+                  className="border border-gray-300 rounded-lg p-2 text-sm flex-1"
+                />
+                <button
+                  type="button"
+                  onClick={handleAddNiceToHave}
+                  className="px-4 py-2 bg-gray-800 text-white text-xs font-bold rounded-lg"
+                >
+                  Add
+                </button>
+              </div>
+              <ul className="space-y-1">
+                {niceToHave.map((nth, i) => (
+                  <li key={i} className="text-xs text-gray-600 flex items-center gap-2">
+                    <span>• {nth}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          {/* Action buttons: Draft or Publish */}
+          <div className="flex justify-end gap-3 pt-6 mt-6 border-t border-gray-100">
+            <button
+              type="button"
+              disabled={submitting}
+              onClick={() => handleSubmit('draft')}
+              className="px-5 py-2.5 border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 text-sm font-semibold rounded-lg transition disabled:opacity-50"
+            >
+              {submitting ? 'Saving...' : 'Save as Draft'}
+            </button>
+            <button
+              type="button"
+              disabled={submitting}
+              onClick={() => handleSubmit('published')}
+              className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-lg transition disabled:opacity-50"
+            >
+              {submitting ? 'Publishing...' : 'Publish Vacancy'}
+            </button>
+          </div>
+        </div>
       </div>
-      <ul className="mt-2">{skills.map((skill, index) => (<li key={index} className="text-sm">{skill}</li>))}</ul>
     </div>
-
-    <div className="md:col-span-2">
-      <label className="block font-medium">Requirements</label>
-      <div className="flex items-center">
-        <input type="text" id="requirements" value={requirementInputValue} onChange={handleRequirementInputChange} placeholder="Enter requirement" className="border p-2 rounded-l w-full" />
-        <button type="button" onClick={handleAddRequirement} className="px-4 py-2 bg-blue-500 text-white rounded-r">Add</button>
-      </div>
-      <ul className="mt-2">{requirements.map((req, index) => (<li key={index} className="text-sm">{req}</li>))}</ul>
-    </div>
-
-    <div className="md:col-span-2">
-      <label className="block font-medium">Responsibilities</label>
-      <div className="flex items-center">
-        <input type="text" id="responsibilities" value={responsibilityInputValue} onChange={handleResponsibilityInputChange} placeholder="Enter responsibility" className="border p-2 rounded-l w-full" />
-        <button type="button" onClick={handleAddResponsibility} className="px-4 py-2 bg-blue-500 text-white rounded-r">Add</button>
-      </div>
-      <ul className="mt-2">{responsibilities.map((resp, index) => (<li key={index} className="text-sm">{resp}</li>))}</ul>
-    </div>
-
-    <div className="md:col-span-2">
-      <label className="block font-medium">Nice-to-Have</label>
-      <div className="flex items-center">
-        <input type="text" id="niceToHave" value={niceToHaveInputValue} onChange={handleNiceToHaveInputChange} placeholder="Enter nice-to-have" className="border p-2 rounded-l w-full" />
-        <button type="button" onClick={handleAddNiceToHave} className="px-4 py-2 bg-blue-500 text-white rounded-r">Add</button>
-      </div>
-      <ul className="mt-2">{niceToHave.map((niceTo, index) => (<li key={index} className="text-sm">{niceTo}</li>))}</ul>
-    </div>
-
-    <button type="submit" className="md:col-span-2 w-full px-4 py-2 bg-blue-500 text-white font-medium rounded hover:bg-blue-600">Submit</button>
-  </form>
-</div>
-
-
   );
 };
 
-export default FormExample;
+export default AddJob;

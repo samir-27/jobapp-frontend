@@ -1,8 +1,6 @@
-import React from "react";
 import Hero from "../components/Hero";
 import Featuredjob from "../components/Featuredjob";
 import TopCompanies from "../components/TopComanies";
-import Reviews from "../components/Reviews";
 
 const Home = () => {
   const Cards = () => {

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import Bgimg from "../assets/loginpng.png";
-import { signup, Placeholder } from "../utils/common.js";
+import { API_BASE_URL } from "../utils/api";
 
 const CompanySignup = () => {
     const navigate = useNavigate();
@@ -57,7 +57,7 @@ const CompanySignup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:3000/companies/signup', {
+            const response = await fetch(`${API_BASE_URL}/companies/signup`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),

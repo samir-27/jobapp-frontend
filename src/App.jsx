@@ -1,20 +1,21 @@
 import { Routes, Route, useLocation, Navigate } from "react-router-dom";
-import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Signin from "./pages/Signin";
 import Signup from "./pages/Signup";
+import ResetPassword from "./pages/ResetPassword";
+import VerifyEmail from "./pages/VerifyEmail";
 import { ToastContainer } from "react-toastify";
 import Jobs from "./pages/Jobs";
 import JobDetail from "./pages/JobDetail";
-import CompanyDashBoard from "./components/CompanyNavbar";
 import AddJob from "./components/AddJob";
 import PostedJobs from "./components/PostedJobs";
 import Profile from "./pages/Profile";
 import MyProfile from "./components/MyProfile";
 import AppliedJobs from "./components/AppliedJobs";
+import CandidateOffers from "./components/CandidateOffers";
 import CompanyNavbar from "./components/CompanyNavbar";
 import CompanyProfile from "./pages/CompnyProfile";
 import CompanyMyProfile from "./components/CompanyMyProfile";
@@ -27,74 +28,129 @@ import Footer from "./components/Footer";
 const ProtectedUserRoute = ({ children }) => {
   const token = localStorage.getItem("authToken");
   const role = localStorage.getItem("role");
-  return token && role === "user" ? children : <Navigate to="/signin" />;
+  return token && role === "user" ? children : <Navigate to="/signin" replace />;
 };
 
 const ProtectedCompanyRoute = ({ children }) => {
   const token = localStorage.getItem("authToken");
   const role = localStorage.getItem("role");
-  return token && role === "company" ? children : <Navigate to="/company/signup" />;
+  return token && role === "company" ? children : <Navigate to="/signin" replace />;
 };
-
 
 const App = () => {
   const location = useLocation();
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  useEffect(() => {
-    const token = localStorage.getItem("authToken");
-    setIsAuthenticated(!!token);
-  }, [location]);
+  const isCompanyRoute = location.pathname.startsWith("/company");
+  const isAuthPage = [
+    "/signin",
+    "/signup",
+    "/company/signup",
+    "/reset-password",
+    "/verify-email",
+  ].includes(location.pathname);
 
   return (
     <>
-  <ToastContainer position="top-center" />
-  {/* Show Navbar only if the user is authenticated and not on sign-in or sign-up pages */}
-  {isAuthenticated &&
-    !["/signin", "/signup", "/company/signup"].includes(location.pathname) &&
-    !location.pathname.startsWith("/company") && <Navbar />}
-  
-  {isAuthenticated &&
-    location.pathname.startsWith("/company") &&
-    location.pathname !== "/company/signup" && <CompanyNavbar />}
+      <ToastContainer position="top-center" autoClose={3000} />
 
-  <div>
-    <Routes>
-      <Route path="/signin" element={<Signin />} />
-      <Route path="/signup" element={<Signup />} />
+      {/* Render Navbar based on context */}
+      {!isAuthPage && !isCompanyRoute && <Navbar />}
+      {!isAuthPage && isCompanyRoute && <CompanyNavbar />}
 
-      {/* Protected Routes (User must be authenticated) */}
-      <Route path="/" element={<ProtectedUserRoute><Home /></ProtectedUserRoute>} />
-<Route path="/jobs" element={<ProtectedUserRoute><Jobs /></ProtectedUserRoute>} />
-<Route path="/job-detail/:id" element={<ProtectedUserRoute><JobDetail /></ProtectedUserRoute>} />
-<Route path="/about" element={<ProtectedUserRoute><About /></ProtectedUserRoute>} />
-<Route path="/contact" element={<ProtectedUserRoute><Contact /></ProtectedUserRoute>} />
-<Route path="/companies" element={<ProtectedUserRoute><Companies /></ProtectedUserRoute>} />
-<Route path="/comp-detail/:id" element={<ProtectedUserRoute><CompanyDetail /></ProtectedUserRoute>} />
-<Route path="/favorites" element={<ProtectedUserRoute><Favorites /></ProtectedUserRoute>} />
+      <div className="min-h-[80vh]">
+        <Routes>
+          {/* Public & Authentication Routes */}
+          <Route path="/signin" element={<Signin />} />
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
+          <Route path="/verify-email" element={<VerifyEmail />} />
+          <Route path="/login" element={<Navigate to="/signin" replace />} />
+          <Route path="/company/signup" element={<CompanySignup />} />
 
-<Route path="/profile" element={<ProtectedUserRoute><Profile /></ProtectedUserRoute>}>
-  <Route index element={<MyProfile />} />
-  <Route path="appliedjobs" element={<AppliedJobs />} />
-</Route>
+          {/* Public Browsing Routes */}
+          <Route path="/" element={<Home />} />
+          <Route path="/jobs" element={<Jobs />} />
+          <Route path="/job-detail/:id" element={<JobDetail />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/companies" element={<Companies />} />
+          <Route path="/comp-detail/:id" element={<CompanyDetail />} />
 
-<Route path="/company/signup" element={<CompanySignup />} />
+          {/* Notification Deep-link Aliases */}
+          <Route
+            path="/applied-jobs"
+            element={<Navigate to="/profile/appliedjobs" replace />}
+          />
+          <Route
+            path="/interviews"
+            element={<Navigate to="/profile/offers" replace />}
+          />
+          <Route
+            path="/offers"
+            element={<Navigate to="/profile/offers" replace />}
+          />
 
-<Route path="/company/addjob" element={<ProtectedCompanyRoute><AddJob /></ProtectedCompanyRoute>} />
-<Route path="/company/postedjobs" element={<ProtectedCompanyRoute><PostedJobs /></ProtectedCompanyRoute>} />
-<Route path="/company/profile" element={<ProtectedCompanyRoute><CompanyProfile /></ProtectedCompanyRoute>}>
-  <Route index element={<CompanyMyProfile />} />
-</Route>
+          {/* Candidate Protected Routes */}
+          <Route
+            path="/favorites"
+            element={
+              <ProtectedUserRoute>
+                <Favorites />
+              </ProtectedUserRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedUserRoute>
+                <Profile />
+              </ProtectedUserRoute>
+            }
+          >
+            <Route index element={<MyProfile />} />
+            <Route path="appliedjobs" element={<AppliedJobs />} />
+            <Route path="offers" element={<CandidateOffers />} />
+          </Route>
 
-    </Routes>
-    {
-          !["/signin", "/signup", "/company/signup"].includes(location.pathname) &&
-          !location.pathname.startsWith("/company") && <Footer />
-    }
-    
-  </div>
-</>
+          {/* Employer Protected Routes */}
+          <Route
+            path="/company/home"
+            element={<Navigate to="/company/postedjobs" replace />}
+          />
+          <Route
+            path="/company/addjob"
+            element={
+              <ProtectedCompanyRoute>
+                <AddJob />
+              </ProtectedCompanyRoute>
+            }
+          />
+          <Route
+            path="/company/postedjobs"
+            element={
+              <ProtectedCompanyRoute>
+                <PostedJobs />
+              </ProtectedCompanyRoute>
+            }
+          />
+          <Route
+            path="/company/profile"
+            element={
+              <ProtectedCompanyRoute>
+                <CompanyProfile />
+              </ProtectedCompanyRoute>
+            }
+          >
+            <Route index element={<CompanyMyProfile />} />
+          </Route>
 
+          {/* Catch-all redirect */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </div>
+
+      {!isAuthPage && !isCompanyRoute && <Footer />}
+    </>
   );
 };
 
